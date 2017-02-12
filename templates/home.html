@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block head_title %}Welcome | {{ block.super }}{% endblock %}
+
+<style>
+{% block style %}
+.navbar-static-top {
+	margin-bottom: 0px !important;
+}
+
+.jumbotron {
+	background-color:##F4FFFF;
+	color: #FFF;
+	{% if featured_image.make_image_background %}
+	background-image: url("{{ featured_image.image.url }}");
+	background-repeat: no-repeat;
+	background-color: #000;
+	background-size: cover;
+	{% endif %}
+}
+
+.main-text {
+	color: black;
+}
+
+
+{% endblock %}
+</style>
+
+
+
+{% block jumbotron %}
+	<div class="jumbotron">
+	 <div class="container">
+		<div class="row">
+			<div class='text-center'>
+			<h1 class='main-text'>Realdew Coffee</h1>
+			<p class='main-text'>커피를 사랑하는 리얼듀 커피에 오신것을 환영합니다.</p>
+			</div>
+			</div>
+		</div>
+	 </div>
+
+{% endblock %}
