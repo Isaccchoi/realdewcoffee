@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 
-{% block head_title %}Welcome | {{ block.super }}{% endblock %}
+{% block head_title %}{{ block.super }}{% endblock %}
 
 <style>
 {% block style %}
@@ -10,16 +10,6 @@
 	margin-bottom: 0px !important;
 }
 
-.jumbotron {
-	background-color:##F4FFFF;
-	color: #FFF;
-	{% if featured_image.make_image_background %}
-	background-image: url("{{ featured_image.image.url }}");
-	background-repeat: no-repeat;
-	background-color: #000;
-	background-size: cover;
-	{% endif %}
-}
 
 .main-text {
 	color: black;
@@ -32,7 +22,7 @@
 
 
 {% block jumbotron %}
-	<div class="jumbotron">
+
 	 <div class="container">
 		<div class="row">
 			<div class='text-center'>
@@ -41,6 +31,6 @@
 			</div>
 			</div>
 		</div>
-	 </div>
+
 
 {% endblock %}

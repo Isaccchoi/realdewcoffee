@@ -7,7 +7,8 @@ class Beverage(models.Model):
     price = models.PositiveIntegerField(null=False, blank=False)
     description = models.TextField()
     on_sale = models.BooleanField(default=True)
-    #이미지
+    # 영어이름
+    # 이미지
 
 class HandDrip(models.Model):
     region = models.CharField(max_length=120, null=False, blank=False)
@@ -16,4 +17,9 @@ class HandDrip(models.Model):
     price = models.PositiveIntegerField(null=False, blank=False)
     on_sale = models.BooleanField(default=True)
     roasting_date = models.DateTimeField()
-    # 이미지?
+    # 영어 지역
+    # 영어 이름
+    
+
+# 티
+# 디저트

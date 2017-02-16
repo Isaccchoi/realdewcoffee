@@ -11,11 +11,9 @@ from main import views as main_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', main_views.home , name='home'),
-    # 메뉴
-    # 메뉴 / 커피 및 티(자세히)
-    # 메뉴 / 핸드드립(자세히)
-    # 메뉴 / 디저트
-    # 핸드드립 주문
+    url(r'^menu/', include('menu.urls')),
+    # 핸드드립 주문  !!!!수정 필요
+
 ]
 
 if settings.DEBUG:
