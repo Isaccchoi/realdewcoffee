@@ -2,36 +2,21 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Coffee
-from .models import Tea
-from .models import Desert
-from .models import HandDrip
+from .models import Beverage
+from .models import Category
 
-class CoffeeAdmin(admin.ModelAdmin):
-    models = Coffee
-    list_display = ('name','price','on_sale')
+class BeverageAdmin(admin.ModelAdmin):
+    models = Beverage
+    list_display = ('name','price','on_sale', 'get_category')
 
-admin.site.register(Coffee, CoffeeAdmin)
+    def get_category(self, obj):
+        return obj.category.name
 
-
-
-class TeaAdmin(admin.ModelAdmin):
-    models = Tea
-    list_display = ('name','price','on_sale')
-
-admin.site.register(Tea, TeaAdmin)
+admin.site.register(Beverage, BeverageAdmin)
 
 
+class CategoryAdmin(admin.ModelAdmin):
+    models = Category
+    list_display = ('name',)
 
-class DesertAdmin(admin.ModelAdmin):
-    models = Desert
-    list_display = ('name','price','on_sale')
-
-admin.site.register(Desert, DesertAdmin)
-
-
-class HandDripAdmin(admin.ModelAdmin):
-    models = HandDrip
-    list_display = ('name','price','on_sale')
-
-admin.site.register(HandDrip, HandDripAdmin)
+admin.site.register(Category, CategoryAdmin)

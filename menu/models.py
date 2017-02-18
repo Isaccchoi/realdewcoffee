@@ -2,40 +2,24 @@ from django.db import models
 
 # Create your models here.
 
-class Coffee(models.Model):
+class Category(models.Model):
+    name = models.CharField(max_length=120, null=False, blank=False, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Beverage(models.Model):
     name = models.CharField(max_length=120, null=False, blank=False)
     name_eng = models.CharField(max_length=120, null=True, blank=True)
     price = models.PositiveIntegerField(null=False, blank=False)
+    category = models.ForeignKey(Category)
     description = models.TextField()
     on_sale = models.BooleanField(default=True)
     # 이미지
 
-    def __unicode__(self):
-        self.name
-
-
-
-class Tea(models.Model):
-    name = models.CharField(max_length=120, null=False, blank=False)
-    name_eng = models.CharField(max_length=120, null=True, blank=True)
-    price = models.PositiveIntegerField(null=False, blank=False)
-    description = models.TextField()
-    on_sale = models.BooleanField(default=True)
-
-    def __unicode__(self):
-        self.name
-
-
-
-class Desert(models.Model):
-    name = models.CharField(max_length=120, null=False, blank=False)
-    name_eng = models.CharField(max_length=120, null=True, blank=True)
-    price = models.PositiveIntegerField(null=False, blank=False)
-    description = models.TextField()
-    on_sale = models.BooleanField(default=True)
-
-    def __unicode__(self):
-        self.name
+    def __str__(self):
+        return self.name
 
 
 
@@ -49,5 +33,5 @@ class HandDrip(models.Model):
     on_sale = models.BooleanField(default=True)
     roasting_date = models.DateTimeField()
 
-    def __unicode__(self):
-        self.name
+    def __str__(self):
+        return self.name

@@ -30,3 +30,11 @@
 {
     text-align: right !important;
 }
+
+.name{
+    font-size: 16px;
+}
+
+.name-eng{
+    color:red;
+}
