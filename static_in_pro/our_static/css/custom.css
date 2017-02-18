@@ -24,3 +24,9 @@
 	margin: 0px;
 	display: none;
 }
+
+
+.text-right
+{
+    text-align: right !important;
+}
