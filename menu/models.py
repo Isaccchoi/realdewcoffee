@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.text import slugify
 
 # Create your models here.
 
@@ -16,6 +15,8 @@ class Beverage(models.Model):
     name_eng = models.CharField(max_length=120, null=False, blank=False, unique=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
     price = models.PositiveIntegerField(null=False, blank=False)
+    hot = models.BooleanField(default=True)
+    ice = models.BooleanField(default=True)
     category = models.ForeignKey(Category)
     description = models.TextField()
     on_sale = models.BooleanField(default=True)

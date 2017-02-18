@@ -7,7 +7,7 @@
 }
 
 .name-eng{
-    color:red;
+    color: gray;
 }
 
 {% endblock %}
@@ -24,7 +24,7 @@
                 {% for coffee in coffees %}
                     {% if coffee.on_sale %}
                         <tr>
-                            <td><span class="name">{{ coffee.name }}</span> <span class="name-eng">{{ coffee.name_eng}}</span></td>
+                            <td><span class="name">{{ coffee.name }}</span> (<span class="name-eng">{{ coffee.name_eng}})</span></td>
                             <td class="text-right">￦{{ coffee.price }}</td>
                         </tr>
                     {% endif %}
@@ -38,7 +38,7 @@
                 {% for tea in teas %}
                     {% if tea.on_sale %}
                         <tr>
-                            <td><span class="name">{{ tea.name }}</span> <span class="name-eng">{{ tea.name_eng}}</span></td>
+                            <td><span class="name">{{ tea.name }}</span> (<span class="name-eng">{{ tea.name_eng}})</span></td>
                             <td class="text-right">￦{{ tea.price }}</td>
                         </tr>
                     {% endif %}
@@ -49,7 +49,7 @@
                 {% for other in others %}
                     {% if other.on_sale %}
                         <tr>
-                            <td><span class="name">{{ other.name }}</span> <span class="name-eng">{{ other.name_eng}}</span></td>
+                            <td><span class="name">{{ other.name }}</span> (<span class="name-eng">{{ other.name_eng}})</span></td>
                             <td class="text-right">￦{{ other.price }}</td>
                         </tr>
                     {% endif %}
