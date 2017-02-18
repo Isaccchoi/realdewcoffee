@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -9,9 +10,11 @@ class Category(models.Model):
         return self.name
 
 
+
 class Beverage(models.Model):
-    name = models.CharField(max_length=120, null=False, blank=False)
-    name_eng = models.CharField(max_length=120, null=True, blank=True)
+    name = models.CharField(max_length=120, null=False, blank=False, unique=True)
+    name_eng = models.CharField(max_length=120, null=False, blank=False, unique=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
     price = models.PositiveIntegerField(null=False, blank=False)
     category = models.ForeignKey(Category)
     description = models.TextField()
@@ -21,11 +24,14 @@ class Beverage(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ["id", "name_eng"]
+
 
 
 class HandDrip(models.Model):
     region = models.CharField(max_length=120, null=False, blank=False)
-    region_eng = models.CharField(max_length=120, null=True, blank=True)
+    region_eng = models.CharField(max_length=120, null=False, blank=False)
     name = models.CharField(max_length=120, null=False, blank=False)
     name_eng = models.CharField(max_length=120,null=True, blank=True)
     description = models.TextField()
@@ -35,3 +41,7 @@ class HandDrip(models.Model):
 
     def __str__(self):
         return self.name
+
+
+    class Meta:
+        ordering = ["id", "name_eng"]

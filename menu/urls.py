@@ -6,13 +6,13 @@ from django.contrib import admin
 
 
 from .views import MenuListView
+from .views import MenuDetailView
 
 
 
 urlpatterns = [
-    url(r'^$', MenuListView.as_view(), name='menu')
-    # 메뉴 / 커피 및 티(자세히)
+    url(r'^$', MenuListView.as_view(), name='menu_list'),
+    url(r'^(?P<slug>\w+)/$', MenuDetailView.as_view(), name='menu_detail'),
     # 메뉴 / 핸드드립(자세히)
-    # 메뉴 / 디저트
     # 핸드드립 주문
 ]
