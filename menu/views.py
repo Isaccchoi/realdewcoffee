@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.http import Http404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
@@ -26,4 +27,12 @@ class MenuListView(ListView):
 class MenuDetailView(DetailView):
     model = Category
     template_name = "menu/menu_detail.html"
-    
+    context_object_name = "details"
+    slug_url_kwargs = "not_slug"
+
+    def get_queryset(self):
+        beverage = Beverage.objects.filter(slug=self.kwargs['slug'])
+        if beverage == None:
+            raise Http404
+            
+        return beverage

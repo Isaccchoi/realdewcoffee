@@ -10,7 +10,26 @@
     color: gray;
 }
 
+.hot{
+    color: red;
+}
+
+.ice{
+    color: blue;
+}
+
+.link-detail{
+    cursor: hand;
+}
+
 {% endblock %}
+<script>
+    {% block jquery %}
+    $('tr[data-href]').on("click", function(){
+        document.location = $(this).data('href');
+    });
+    {% endblock %}
+</script>
 
 {% block content %}
 
@@ -18,43 +37,49 @@
 <h3>{{ object }}</h3>
 
 <div class='row main-contant'>
-    <div class='col-xs-6'>
-        <h3 class='text-center'>Coffee</h3>
-            <table class='table'>
-                {% for coffee in coffees %}
-                    {% if coffee.on_sale %}
-                        <tr>
-                            <td><span class="name">{{ coffee.name }}</span> (<span class="name-eng">{{ coffee.name_eng}})</span></td>
-                            <td class="text-right">￦{{ coffee.price }}</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-        </table>
-        <br/>
-    </div>
-    <div class="col-xs-6">
-        <h3 class='text-center'>Tea</h3>
-            <table class='table'>
-                {% for tea in teas %}
-                    {% if tea.on_sale %}
-                        <tr>
-                            <td><span class="name">{{ tea.name }}</span> (<span class="name-eng">{{ tea.name_eng}})</span></td>
-                            <td class="text-right">￦{{ tea.price }}</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-        </table>
-        <h3 class='text-center'>Other</h3>
-            <table class='table'>
-                {% for other in others %}
-                    {% if other.on_sale %}
-                        <tr>
-                            <td><span class="name">{{ other.name }}</span> (<span class="name-eng">{{ other.name_eng}})</span></td>
-                            <td class="text-right">￦{{ other.price }}</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-        </table>
+    <div class='col-sm-12'>
+        <div class='col-sm-6'>
+            <h3 class='text-center'>Coffee</h3>
+                <table class='table'>
+                    {% for coffee in coffees %}
+                        {% if coffee.on_sale %}
+                                <tr data-href="{{ coffee.get_absolute_url }}" role="button">
+                                    <td><span class="name">{{ coffee.name }}</span> (<span class="name-eng">{{ coffee.name_eng}})</span></td>
+                                    <td>{% if coffee.hot %}<span class="hot">HOT </span>{% endif %}{% if coffee.ice %}<span class="ice"> ICE</span>{% endif %}</td>
+                                    <td class="text-right">￦{{ coffee.price }}</td>
+                                </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+            <br/>
+        </div>
+
+        <div class="col-sm-6">
+            <h3 class='text-center'>Tea</h3>
+                <table class='table'>
+                    {% for tea in teas %}
+                        {% if tea.on_sale %}
+                            <tr data-href="{{ tea.get_absolute_url }}" role="button">
+                                <td><span class="name">{{ tea.name }}</span> (<span class="name-eng">{{ tea.name_eng}})</span></td>
+                                <td>{% if tea.hot %}<span class="hot">HOT </span>{% endif %}{% if tea.ice %}<span class="ice"> ICE</span>{% endif %}</td>
+                                <td class="text-right">￦{{ tea.price }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+            <h3 class='text-center'>Other</h3>
+                <table class='table'>
+                    {% for other in others %}
+                        {% if other.on_sale %}
+                            <tr data-href="{{ other.get_absolute_url }}" role="button">
+                                <td><span class="name">{{ other.name }}</span> (<span class="name-eng">{{ other.name_eng}})</span></td>
+                                <td>{% if other.hot %}<span class="hot">HOT </span>{% endif %}{% if other.ice %}<span class="ice"> ICE</span>{% endif %}</td>
+                                <td class="text-right">￦{{ other.price }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 
