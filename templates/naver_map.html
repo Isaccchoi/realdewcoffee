@@ -1,0 +1,22 @@
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId={{ naver_client_id }}"></script>
+
+
+
+<div id="map" style="width:{{ width }}px; height: {{ height}}px"></div>
+
+<script>
+{% block jquery %}
+(function() {
+    var base_point = new naver.maps.LatLng({{ base_lat }}, {{ base_lng }});
+    var map = new naver.maps.Map(document.getElementById('map'), {
+        mapTypeId: naver.maps.MapTypeId.HYBRID
+    });
+    map.setCenter(base_point);
+    map.setZoom(13);
+    var marker = new naver.maps.Marker({
+        position: base_point,
+        map: map
+    });
+})();
+{% endblock %}
+</script>
