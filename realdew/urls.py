@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', main_views.home , name='home'),
     url(r'^menu/', include('menu.urls')),
+    url(r'^location/$', main_views.location, name='location'),
     # 핸드드립 주문  !!!!수정 필요
 
 ]

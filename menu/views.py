@@ -34,5 +34,5 @@ class MenuDetailView(DetailView):
         beverage = Beverage.objects.filter(slug=self.kwargs['slug'])
         if beverage == None:
             raise Http404
-            
+
         return beverage

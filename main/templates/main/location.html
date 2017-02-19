@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class='row main-contant'>
+    <div class='col-sm-8 col-sm-offset-2 text-center'>
+        <h2>{{ title }}</h2>
+    </div>
+
+    <div class="col-sm-8 col-sm-offset-3 text-center">
+            {{ form.as_p }}
+
+    </div>
+
+</div>
+{% endblock %}

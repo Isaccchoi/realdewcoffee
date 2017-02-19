@@ -131,6 +131,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+USE_THOUSAND_SEPARATOR = True
+
 
 STATIC_URL = '/static/'
 
@@ -145,3 +147,7 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_roo
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+# 네이버 지도 연동
+NAVER_CLIENT_ID = 'szap2ec6EBjwpHiaMoJN'
