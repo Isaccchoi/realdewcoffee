@@ -16,8 +16,8 @@ def home(request):
 def location(request):
     ctx = {
         "title" : "RealDew Coffee 오시는길",
-        "base_lat" : '126.9191396',
-        "base_lng" : '37.5551422',
+        "base_lat" : '126.919122',
+        "base_lng" : '37.555112',
         "naver_client_id" : settings.NAVER_CLIENT_ID,
         "width" : 600,
         "height" : 500,
