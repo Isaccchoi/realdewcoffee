@@ -1,13 +1,15 @@
 from django.conf import settings
 from django.shortcuts import render
-from .forms import PostForm
 
 # Create your views here.
+
+
+
 def home(request):
     title = "안녕하세요"
 
     ctx = {
-        "title": title
+        "title": title,
     }
 
     return render(request, 'home.html', ctx)
@@ -15,12 +17,12 @@ def home(request):
 
 def location(request):
     ctx = {
-        "title" : "RealDew Coffee 오시는길",
+        "title" : "RealDew Coffee",
         "base_lat" : '126.919122',
         "base_lng" : '37.555112',
         "naver_client_id" : settings.NAVER_CLIENT_ID,
-        "width" : 600,
-        "height" : 500,
+        "width" : 800,
+        "height" : 600,
         "id" : "1007",
     }
 

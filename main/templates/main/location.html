@@ -2,14 +2,10 @@
 
 
 {% block content %}
-<div class='row main-contant'>
-    <div class='col-sm-8 col-sm-offset-2 text-center'>
-        <h2>{{ title }}</h2>
+    <h1 class="read text-center">{{ title }}</h1>
+    {% include "naver_map.html" %}
+    <div class='col-sm-12'>
+        <br/>
+        <p class='text-center'><a href="http://map.naver.com/local/siteview.nhn?code=37755773&_ts=1487514401638"><input type='submit' value="네이버 지도로 보기" class="btn btn-success btn-lg"/></a></p>
     </div>
-
-    <div class="col-sm-8 col-sm-offset-3 text-center">
-        {% include "naver_map.html" %}
-    </div>
-
-</div>
 {% endblock %}
