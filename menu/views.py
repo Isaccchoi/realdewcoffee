@@ -9,6 +9,7 @@ from django.views.generic.detail import DetailView
 
 from .models import Beverage
 from .models import Category
+from .models import HandDrip
 
 
 class MenuListView(ListView):
@@ -17,9 +18,13 @@ class MenuListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(MenuListView, self).get_context_data(*args, **kwargs)
+        drips = HandDrip.objects.all()
         context["coffees"] = Category.objects.get(name="Coffee").beverage_set.all()
         context["teas"] = Category.objects.get(name="Tea").beverage_set.all()
         context["others"] = Category.objects.get(name="Others").beverage_set.all()
+        context["deserts"] = Category.objects.get(name="Desert").desert_set.all()
+        context["drips"] = drips
+
         return context
 
 

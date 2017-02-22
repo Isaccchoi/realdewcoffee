@@ -19,9 +19,9 @@ class Beverage(models.Model):
     hot = models.BooleanField(default=True)
     ice = models.BooleanField(default=True)
     category = models.ForeignKey(Category)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     on_sale = models.BooleanField(default=True)
-    # 이미지
+    # 이미지 fixme
 
     def __str__(self):
         return self.name
@@ -39,10 +39,11 @@ class HandDrip(models.Model):
     region_eng = models.CharField(max_length=120, null=False, blank=False)
     name = models.CharField(max_length=120, null=False, blank=False)
     name_eng = models.CharField(max_length=120,null=True, blank=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
     description = models.TextField()
     price = models.PositiveIntegerField(null=False, blank=False)
     on_sale = models.BooleanField(default=True)
-    roasting_date = models.DateTimeField()
+    roasting_date = models.DateField()
 
     def __str__(self):
         return self.name
@@ -51,4 +52,18 @@ class HandDrip(models.Model):
         return reverse('menu_detail', kwargs={'slug': self.slug})
 
     class Meta:
-        ordering = ["id", "name_eng"]
+        ordering = ["-roasting_date", "-id"]
+
+
+class Desert(models.Model):
+    name = models.CharField(max_length=120, null=False, blank=False)
+    name_eng = models.CharField(max_length=120, null=False, blank=False)
+    slug = models.SlugField(unique=True, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    price = models.PositiveIntegerField(null=False, blank=False)
+    on_sale = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='%Y/%m/%d/', null=True, blank=True)
+    category = models.ForeignKey(Category)
+
+    def __str__(self):
+        return self.name
