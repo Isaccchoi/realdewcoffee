@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.utils import timezone
 
 
 # Create your views here
@@ -18,7 +19,12 @@ class MenuListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(MenuListView, self).get_context_data(*args, **kwargs)
-        drips = HandDrip.objects.all()
+        drips = HandDrip.objects.all().filter(on_sale=True)
+        today = timezone.now().date()
+        for drip in drips:
+            drip.aged = (today - drip.roasting_date).days
+            print(drip.aged)
+
         context["coffees"] = Category.objects.get(name="Coffee").beverage_set.all()
         context["teas"] = Category.objects.get(name="Tea").beverage_set.all()
         context["others"] = Category.objects.get(name="Others").beverage_set.all()

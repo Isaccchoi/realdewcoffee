@@ -9,13 +9,15 @@ from .models import HandDrip
 from .models import Desert
 
 class BeverageAdmin(admin.ModelAdmin):
-    fields = ['name', 'name_eng', 'price', 'category', 'on_sale', 'hot', 'ice']
+    fields = ['name', 'name_eng', 'price', 'category', 'on_sale', 'hot','warm', 'ice']
     models = Beverage
     list_display = ('name','price','on_sale', 'category', 'slug')
     list_filter = (('category', admin.RelatedOnlyFieldListFilter),)
 
     def save_model(self, request, obj, form, change):
         obj.slug = slugify(form.cleaned_data['name_eng'])
+        if obj.hot == True and obj.warm == True:
+            obj.warm = False
         obj.save()
 
 admin.site.register(Beverage, BeverageAdmin)

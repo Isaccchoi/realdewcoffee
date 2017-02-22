@@ -46,12 +46,28 @@
                         {% if coffee.on_sale %}
                                 <tr>
                                     <td><span class="name">{{ coffee.name }}</span> <span class="name-eng">({{ coffee.name_eng}})</span></td>
-                                    <td>{% if coffee.hot %}<span class="hot">HOT </span>{% endif %}{% if coffee.ice %}<span class="ice"> ICE</span>{% endif %}</td>
+                                    <td>{% if coffee.hot %}<span class="hot">HOT </span>{% endif %}{% if coffee.warm %}<span class='hot'>Warm</span>{% endif %}</td>
+                                    <td>{% if coffee.ice %}<span class="ice"> ICE</span>{% endif %}</td>
                                     <td class="text-right">￦{{ coffee.price }}</td>
                                 </tr>
                         {% endif %}
                     {% endfor %}
             </table>
+
+            <h3 class='text-center'>Tea</h3>
+                <table class='table'>
+                    {% for tea in teas %}
+                        {% if tea.on_sale %}
+                            <tr>
+                                <td><span class="name">{{ tea.name }}</span> <span class="name-eng">({{ tea.name_eng}})</span></td>
+                                <td>{% if tea.hot %}<span class="hot">HOT </span>{% endif %}{% if tea.warm %}<span class='hot'>Warm</span>{% endif %}</td>
+                                <td>{% if tea.ice %}<span class="ice"> ICE</span>{% endif %}</td>
+                                <td class="text-right">￦{{ tea.price }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+
             <h3 class='text-center'>Hand Drip</h3>
             <table class='table'>
                 {% for drip in drips %}
@@ -62,15 +78,16 @@
                             <span class="name-eng">({{ drip.region_eng }} {{ drip.name_eng }})</span>
                         </td>
                         <td>Roasting Date: <br/>{{ drip.roasting_date }}</td>
+                        <td class="name-eng text-right">{% if drip.aged == 0 %}오늘 로스팅{% else %}{{ drip.aged }}일 전 로스팅{% endif %}<td>
                         <td class="text-right">￦{{ drip.price }}</td>
                     </tr>
                     {% endif %}
                 {% endfor %}
-
             </table>
-            <p class='text-center'>전체 핸드드립 메뉴는 <span class="hot">HOT</span> <span class="ice">ICE</span> 모두 가능합니다.</p>
+            <p class='text-center lead'>전체 핸드드립 메뉴는 <span class="hot">HOT</span> <span class="ice">ICE</span> 모두 가능합니다.</p>
             <br/>
         </div>
+
 
         <div class="col-sm-6">
             <h3 class='text-center'>Other</h3>
@@ -79,38 +96,28 @@
                         {% if other.on_sale %}
                             <tr>
                                 <td><span class="name">{{ other.name }}</span> <span class="name-eng">({{ other.name_eng}})</span></td>
-                                <td>{% if other.hot %}<span class="hot">HOT </span>{% endif %}{% if other.ice %}<span class="ice"> ICE</span>{% endif %}</td>
+                                <td>{% if other.hot %}<span class="hot">HOT </span>{% endif %}{% if other.warm %}<span class='hot'>Warm</span>{% endif %}</td>
+                                <td>{% if other.ice %}<span class="ice"> ICE</span>{% endif %}</td>
                                 <td class="text-right">￦{{ other.price }}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}
             </table>
-            <h3 class='text-center'>Tea</h3>
-                <table class='table'>
-                    {% for tea in teas %}
-                        {% if tea.on_sale %}
-                            <tr>
-                                <td><span class="name">{{ tea.name }}</span> <span class="name-eng">({{ tea.name_eng}})</span></td>
-                                <td>{% if tea.hot %}<span class="hot">HOT </span>{% endif %}{% if tea.ice %}<span class="ice"> ICE</span>{% endif %}</td>
-                                <td class="text-right">￦{{ tea.price }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-            </table>
-            <h3 class='text-center'>Desert</h3>
-                <table class='table'>
-                    {% for desert in deserts %}
-                        {% if desert.on_sale %}
-                            <tr>
-                                <td>
-                                    <span class="name">{{ desert.name }}</span> <span class="name-eng">({{ desert.name_eng}})</span>
-                                </td>
-                                <td class="text-right">￦{{ desert.price }}</td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                </table>
 
+            <h3 class='text-center'>Desert</h3>
+                {% for desert in deserts %}
+                    {% if desert.on_sale %}
+                        <table class='table'>
+                                    <tr>
+                                        <td>
+                                            <span class="name">{{ desert.name }}</span> <span class="name-eng">({{ desert.name_eng}})</span>
+                                        </td>
+                                        <td class="text-right">￦{{ desert.price }}</td>
+                                    </tr>
+                        </table>
+                        {% if desert.image %}<p><img class="img-responsive" src="{{ desert.image.url }}" /></p>{% endif %}
+                {% endif %}
+            {% endfor %}
         </div>
 
     </div>
