@@ -31,9 +31,9 @@ admin.site.register(Category, CategoryAdmin)
 
 
 class HandDripAdmin(admin.ModelAdmin):
-    fields = ['name', 'name_eng', 'region', 'region_eng', 'price', 'on_sale', 'roasting_date',]
+    fields = ['region', 'name', 'region_eng', 'name_eng', 'price', 'on_sale', 'roasting_date',]
     models = HandDrip
-    list_display = ('name', 'name_eng', 'region', 'region_eng', 'price', 'on_sale', 'roasting_date', 'slug',)
+    list_display = ('region', 'name', 'region_eng', 'name_eng', 'price', 'on_sale', 'roasting_date', 'slug',)
     list_filter = ('on_sale',)
 
     def save_model(self, request, obj, form, change):

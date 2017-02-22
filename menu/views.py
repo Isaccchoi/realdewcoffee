@@ -23,7 +23,6 @@ class MenuListView(ListView):
         today = timezone.now().date()
         for drip in drips:
             drip.aged = (today - drip.roasting_date).days
-            print(drip.aged)
 
         context["coffees"] = Category.objects.get(name="Coffee").beverage_set.all()
         context["teas"] = Category.objects.get(name="Tea").beverage_set.all()
@@ -47,3 +46,5 @@ class MenuDetailView(DetailView):
             raise Http404
 
         return beverage
+
+# 더치 커피 예약 fixme

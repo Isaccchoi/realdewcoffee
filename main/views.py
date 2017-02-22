@@ -13,6 +13,7 @@ def home(request):
     }
 
     return render(request, 'home.html', ctx)
+    # fixme 이미지 슬라이드 기능 추가 필요 
 
 
 def location(request):
@@ -27,7 +28,7 @@ def location(request):
         'address_short': "서울특별시 마포구 서교동 352-7",
         'working_time': "08:00 ~ 23:00",
         'phone': "02-333-5945"
-        # fixme
+        # fixme 아이콘 추가
     }
 
     return render(request, 'main/location.html', ctx)
