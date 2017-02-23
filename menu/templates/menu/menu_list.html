@@ -18,9 +18,6 @@
     color: blue;
 }
 
-.link-detail{
-    cursor: hand;
-}
 
 {% endblock %}
 <script>
@@ -50,20 +47,6 @@
                                     <td>{% if coffee.ice %}<span class="ice"> ICE</span>{% endif %}</td>
                                     <td class="text-right">￦{{ coffee.price }}</td>
                                 </tr>
-                        {% endif %}
-                    {% endfor %}
-            </table>
-
-            <h3 class='text-center'>Tea</h3>
-                <table class='table'>
-                    {% for tea in teas %}
-                        {% if tea.on_sale %}
-                            <tr>
-                                <td><span class="name">{{ tea.name }}</span> <span class="name-eng">({{ tea.name_eng}})</span></td>
-                                <td>{% if tea.hot %}<span class="hot">HOT </span>{% endif %}{% if tea.warm %}<span class='hot'>Warm</span>{% endif %}</td>
-                                <td>{% if tea.ice %}<span class="ice"> ICE</span>{% endif %}</td>
-                                <td class="text-right">￦{{ tea.price }}</td>
-                            </tr>
                         {% endif %}
                     {% endfor %}
             </table>
@@ -104,20 +87,34 @@
                     {% endfor %}
             </table>
 
+            <h3 class='text-center'>Tea</h3>
+                <table class='table'>
+                    {% for tea in teas %}
+                        {% if tea.on_sale %}
+                            <tr>
+                                <td><span class="name">{{ tea.name }}</span> <span class="name-eng">({{ tea.name_eng}})</span></td>
+                                <td>{% if tea.hot %}<span class="hot">HOT </span>{% endif %}{% if tea.warm %}<span class='hot'>Warm</span>{% endif %}</td>
+                                <td>{% if tea.ice %}<span class="ice"> ICE</span>{% endif %}</td>
+                                <td class="text-right">￦{{ tea.price }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+
             <h3 class='text-center'>Desert</h3>
+            <table class='table'>
                 {% for desert in deserts %}
                     {% if desert.on_sale %}
-                        <table class='table'>
-                                    <tr>
-                                        <td>
-                                            <span class="name">{{ desert.name }}</span> <span class="name-eng">({{ desert.name_eng}})</span>
-                                        </td>
-                                        <td class="text-right">￦{{ desert.price }}</td>
-                                    </tr>
-                        </table>
-                        {% if desert.image %}<p><img class="img-responsive" src="{{ desert.image.url }}" /></p>{% endif %}
-                {% endif %}
-            {% endfor %}
+                        <tr>
+                            <td>
+                                <span class="name">{{ desert.name }}</span> <span class="name-eng">({{ desert.name_eng}})</span>
+                            </td>
+                            <td class="text-right">￦{{ desert.price }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+            </table>
+            <!-- {% if desert.image %}<p><img class="img-responsive" src="{{ desert.image.url }}" /></p>{% endif %} -->
         </div>
 
     </div>

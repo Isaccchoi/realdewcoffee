@@ -13,7 +13,7 @@ def home(request):
     }
 
     return render(request, 'home.html', ctx)
-    # fixme 이미지 슬라이드 기능 추가 필요 
+    # fixme 이미지 슬라이드 기능 추가 필요
 
 
 def location(request):
