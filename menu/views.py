@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import Http404
-from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.utils import timezone
@@ -47,9 +46,3 @@ class MenuDetailView(DetailView):
             raise Http404
 
         return beverage
-
-
-
-class DutchOrderView(CreateView):
-    return Http404
-    # 더치 커피 예약 fixme

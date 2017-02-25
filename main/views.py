@@ -1,5 +1,7 @@
 from django.conf import settings
+from django.views.generic.edit import CreateView
 from django.shortcuts import render
+from django.http import Http404
 
 # Create your views here.
 
@@ -32,3 +34,8 @@ def location(request):
     }
 
     return render(request, 'main/location.html', ctx)
+
+
+# class DutchOrderView(CreateView):
+#     raise Http404
+    # 더치 커피 예약 fixme

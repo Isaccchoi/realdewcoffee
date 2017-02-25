@@ -13,7 +13,7 @@ from .views import MenuDetailView
 urlpatterns = [
     url(r'^$', MenuListView.as_view(), name='menu_list'),
     url(r'^(?P<slug>[\w-]+)/$', MenuDetailView.as_view(), name='menu_detail'),
-    # 더치 커피 주문 fixme
+    # url(r'^/order/$', )
 ]
 
 if settings.DEBUG:

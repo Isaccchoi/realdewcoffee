@@ -70,9 +70,3 @@ class Desert(models.Model):
 
     def __str__(self):
         return self.name
-
-class DutchOrder(models.Model):
-    name = models.CharField(max_length=50, null=False, blank=False)
-    # phone_regex
-    # phone_number = models.CharField(validators['phone_regex'], null=False, blank=True)
-    # fixme
