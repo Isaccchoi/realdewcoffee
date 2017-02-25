@@ -5,6 +5,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 from main import views as main_views
+from main.views import location
+from main.views import DutchOrderView
 
 
 
@@ -12,8 +14,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', main_views.home , name='home'),
     url(r'^menu/', include('menu.urls')),
-    url(r'^location/$', main_views.location, name='location'),
-    url(r'^order/$', main_views.DutchOrderView.as_view, name='dutch_order'),
+    url(r'^location/$', location, name='location'),
+    url(r'^order/$', DutchOrderView.as_view(), name='dutch_order'),
 
 ]
 

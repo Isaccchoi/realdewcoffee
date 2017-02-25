@@ -1,7 +1,8 @@
 from django.conf import settings
-from django.views.generic.edit import CreateView
-from django.shortcuts import render
 from django.http import Http404
+from django.shortcuts import render
+from django.shortcuts import redirect
+from django.views.generic.edit import FormView
 
 # Create your views here.
 
@@ -39,12 +40,25 @@ def location(request):
     return render(request, 'main/location.html', ctx)
 
 
-class DutchOrderView(CreateView):
+class DutchOrderView(FormView):
     form_class = DutchOrderForm
-    template_name = "forms.html"
+    template_name = 'main/dutch_order.html'
+    print("-" * 20)
 
-    def form_valid(self, request, *args, **kwargs):
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        print("2" * 20)
         if form.is_valid():
-            phone_num = form.cleaned_data.get('phone_regex', '')
-            # if phone_num != '':
+            phone_num = form.cleaned_data.get('phone_regex')
+            user, _ = User.objects.get_or_create(phone_number=phone_num)
+            print(user.id)
+            order.user = user
+            order.total_charge = order.quantity * 12000
+            order.save()
+            return redirect('dutch_order')
+
+        raise Http404
+
+
 #fixme

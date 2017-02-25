@@ -2,6 +2,9 @@ from django.conf import settings
 from django.db import models
 from django.core.validators import RegexValidator
 
+from datetime import datetime
+from datetime import timedelta
+
 # Create your models here.
 class Image(models.Model):
     name = models.CharField(max_length=150)
@@ -25,9 +28,9 @@ class User(models.Model):
 
 class DutchOrder(models.Model):
     user = models.ForeignKey(User)
-    created_at = models.DateTimeField(auto_now_add=True)
-    reserve_at = models.DateTimeField(null=False, blank=False)
     quantity = models.PositiveSmallIntegerField(null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    reserve_at = models.DateTimeField(default=datetime.now() + timedelta(hours=12))
     total_charge = models.PositiveIntegerField(null=False, blank=False)
 
     def __str__(self):
