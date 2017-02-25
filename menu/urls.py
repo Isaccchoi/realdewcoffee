@@ -9,11 +9,9 @@ from .views import MenuListView
 from .views import MenuDetailView
 
 
-
 urlpatterns = [
     url(r'^$', MenuListView.as_view(), name='menu_list'),
     url(r'^(?P<slug>[\w-]+)/$', MenuDetailView.as_view(), name='menu_detail'),
-    # url(r'^/order/$', )
 ]
 
 if settings.DEBUG:

@@ -5,6 +5,9 @@ from django.http import Http404
 
 # Create your views here.
 
+from .forms import DutchOrderForm
+from .models import User
+from .models import DutchOrder
 
 
 def home(request):
@@ -36,6 +39,12 @@ def location(request):
     return render(request, 'main/location.html', ctx)
 
 
-# class DutchOrderView(CreateView):
-#     raise Http404
-    # 더치 커피 예약 fixme
+class DutchOrderView(CreateView):
+    form_class = DutchOrderForm
+    template_name = "forms.html"
+
+    def form_valid(self, request, *args, **kwargs):
+        if form.is_valid():
+            phone_num = form.cleaned_data.get('phone_regex', '')
+            # if phone_num != '':
+#fixme

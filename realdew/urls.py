@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^$', main_views.home , name='home'),
     url(r'^menu/', include('menu.urls')),
     url(r'^location/$', main_views.location, name='location'),
-    # 핸드드립 주문  !!!!수정 필요
+    url(r'^order/$', main_views.DutchOrderView.as_view, name='dutch_order'),
 
 ]
 
