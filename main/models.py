@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.core.validators import RegexValidator
+from django.utils import timezone
 
 from datetime import datetime
 from datetime import timedelta
@@ -25,12 +26,15 @@ class User(models.Model):
         return self.phone_number
 
 
+def default_time():
+    return timezone.now() + timedelta(hours=12)
+
 
 class DutchOrder(models.Model):
     user = models.ForeignKey(User)
-    quantity = models.PositiveSmallIntegerField(null=False, blank=False)
+    quantity = models.PositiveSmallIntegerField(null=False, blank=False, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
-    reserve_at = models.DateTimeField(default=datetime.now() + timedelta(hours=12))
+    reserve_at = models.DateTimeField(default=default_time)
     total_charge = models.PositiveIntegerField(null=False, blank=False)
 
     def __str__(self):

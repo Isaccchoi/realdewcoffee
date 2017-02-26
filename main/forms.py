@@ -1,5 +1,7 @@
 from django import forms
 from django.core.validators import RegexValidator
+from django.utils.translation import ugettext_lazy as _
+
 from .models import DutchOrder
 
 class DutchOrderForm(forms.ModelForm):
@@ -10,3 +12,7 @@ class DutchOrderForm(forms.ModelForm):
     class Meta:
         model = DutchOrder
         fields = ('reserve_at', 'quantity',)
+        labels = {
+            'reserve_at': _('예약 시간'),
+            'quantity': _('수량'),
+            }
