@@ -44,7 +44,8 @@ class User(models.Model):
 
 def default_time():
     now = timezone.now()
-    open = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    open = now.replace(hour=9, minute=0, second=0, microsecond=0,
+                            tzinfo=timezone.get_current_timezone())
     return open if open >= now else open + timedelta(days=1)
 
 
