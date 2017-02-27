@@ -4,6 +4,12 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import DutchOrder
 
+
+class DateTimeInput(forms.DateInput):
+    input_type = 'date'
+
+
+
 class DutchOrderForm(forms.ModelForm):
     phone_regex = forms.RegexField(label="휴대폰 번호",
                     regex="^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$",
@@ -19,6 +25,9 @@ class DutchOrderForm(forms.ModelForm):
             'reserve_at': _('예약 시간'),
             'quantity': _('수량'),
             }
+        widgets = {
+            'reserve_at': DateTimeInput(),
+        }
 # 기본적인 기능 구현 완료 regex를 좀 더 명확하게 정할 필요가 있음
 # datetimefield 입력시 좀 더 편하게 구현할 방법을 찾아야함
 #
