@@ -30,23 +30,12 @@ class User(models.Model):
 
 
 
-# def default_time():
-#     timenow = datetime.today()
-#
-#     opentime = time(9, 0, 0, tzinfo=timezone.get_current_timezone())
-#     closetime = time(21, 0, 0, tzinfo=timezone.get_current_timezone())
-#     tomorrow = timenow + timedelta(days=1)
-#     if timenow.time > opentime and timenow.time < closetime:
-#         ordertime = datetime.combine(tomorrow, opentime)
-#     else:
-#         ordertime = timenow + timedelta(hours=12)
-#     return ordertime
-
 def default_time():
     now = timezone.now()
     open = now.replace(hour=9, minute=0, second=0, microsecond=0,
                             tzinfo=timezone.get_current_timezone())
     return open if open >= now else open + timedelta(days=1)
+
 
 
 class DutchOrder(models.Model):
