@@ -14,13 +14,15 @@
 
 {% block content %}
     <h1 class="read text-center">{{ title }}</h1>
+	<hr/>
+	<br/>
     <div class='row main-content'>
         <div class='col-sm-12'>
             {% include "naver_map.html" %}
         </div>
         <div class='col-sm-18 col-lg-12 col-sm-6 text-center'>
             <br/>
-            <p class='lead'><a href="http://map.naver.com/local/siteview.nhn?code=37755773&_ts=1487514401638"><input type='submit' value="네이버 지도앱에서 보기" class="btn btn-success btn-lg"/></a></p>        {# fixme #}
+            <!-- <p class='lead'><a href="http://map.naver.com/local/siteview.nhn?code=37755773&_ts=1487514401638"><input type='submit' value="네이버 지도앱에서 보기" class="btn btn-success btn-lg"/></a></p>        {# fixme #} -->
             <p class='lead'>주소: {{ address }} <br/>{{ address_short }}</p>
             <p class='lead'>영업 시간: {{ working_time }}</p>
             <p class='lead'>전화 번호: {{ phone }}</p>     {# fixme #}
