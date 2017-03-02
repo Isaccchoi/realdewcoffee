@@ -5,6 +5,9 @@ from django.shortcuts import redirect
 from django.views.generic.edit import FormView
 
 # Create your views here.
+from datetime import datetime
+from datetime import timedelta
+
 
 from .forms import DutchOrderForm
 from .models import User
@@ -53,6 +56,9 @@ class DutchOrderView(FormView):
             phone_num = form.cleaned_data.get('phone_regex')
             user, _ = User.objects.get_or_create(phone_number=phone_num)
             print(user.id)
+            date = form.cleaned_data.get('seperate_date')
+            time = form.cleaned_data.get('seperate_time')
+            order.reserve_at = datetime.combine(date,time)
             order.user = user
             order.total_charge = order.quantity * 12000
             order.save()

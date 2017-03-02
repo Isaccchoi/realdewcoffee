@@ -1,6 +1,23 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+<script>
+{% block jquery %}
+$('.time-input').timepicker({
+    'timeFormat': 'HH:mm',
+    'minTime': '09:00',
+    'maxTime': '21:00'
+ });
+$('.date-input').datepicker({
+    'format': 'yyyy-mm-dd',
+    'autoclose': true
+});
+// initialize datepair
+var basicExampleEl = document.getElementById('basicExample');
+var datepair = new Datepair(basicExampleEl);
+{% endblock %}
+</script>
+
 
 {% block content %}
 
