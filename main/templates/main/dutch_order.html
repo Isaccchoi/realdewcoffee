@@ -13,18 +13,27 @@ $('.date-input').datepicker({
     'autoclose': true
 });
 // initialize datepair
-var basicExampleEl = document.getElementById('basicExample');
-var datepair = new Datepair(basicExampleEl);
 {% endblock %}
 </script>
 
 
 {% block content %}
+<div class='row'>
+    <h1 class="text-center">Dutch Coffee 예약</h1>
+    <hr/>
+    <br/>
+    <div class='col-sm-8'>
+        <img class='img-responsive' src="http://localhost:8000/media/images/2017/03/02/dutch.JPG" />
+    </div>
 
-<form method="POST" action=''>{% csrf_token %}
-    {{ form | crispy }}
+    <div class='col-sm-4'>
+        <h3 class='text-center'>Dutch Coffee</h3>
+        <h4 class='text-right'>￦12,000</h4>
+        <form method="POST" action=''>{% csrf_token %}
+            {{ form | crispy }}
 
-<input class='btn' type='submit' value='submit' />
-</form>
-
+        <p class="text-right"><input class='btn' type='submit' value='예약' /></p>
+        </form>
+    </div>
+</div>
 {% endblock %}

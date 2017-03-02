@@ -26,7 +26,7 @@ def default_time():
 
 
 class DutchOrderForm(forms.ModelForm):
-    phone_regex = forms.RegexField(label="휴대폰 번호",
+    phone_regex = forms.RegexField(label="휴대폰 번호 (예: 010-1234-5678)",
                     regex="^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$",
                     error_messages={
                         'invalid': ("010-1234-5678 형식으로 12자리를 입력하세요.")
@@ -58,5 +58,3 @@ class DutchOrderForm(forms.ModelForm):
     #     #                                     self.cleaned_data.get('seperate_time',None))
     #     if self.cleaned_data['reserve_at'] < default_time:
     #         raise ValidationError("예약 가능 시간이 아닙니다. %s 이후로 예약해주세요") %(default_time)
-
-    
