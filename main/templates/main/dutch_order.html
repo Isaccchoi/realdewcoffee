@@ -12,28 +12,54 @@ $('.date-input').datepicker({
     'format': 'yyyy-mm-dd',
     'autoclose': true
 });
-// fixme add ajax for price is changing
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+$('.quantity').change(function(){
+    var qty = $(".quantity").val()
+    var total = $("#total").val()
+    var price = 12000
+    var data = {
+        qty: qty,
+        total: total,
+        price: price
+    }
+    console.log(data);
+    $.ajax({
+        type: "GET", //"POST"
+        url: "{% url 'dutch_order' %}",
+        data: data,
+        success: function(data){
+            $("#total").text(data.total);
+        },
+        error: function(response, error){
+			console.log(response);
+				// console.log(error)
+		}
+    })
+});
+// initialize datepair
+var basicExampleEl = document.getElementById('basicExample');
+var datepair = new Datepair(basicExampleEl);
 {% endblock %}
 </script>
 
 
 {% block content %}
 <div class='row'>
-    <h1 class="text-center">Dutch Coffee 예약</h1>
-    <hr/>
-    <br/>
+    <h1 class="text-center">Dutch Coffee 주문</h1>
+    <br>
     <div class='col-sm-8'>
-        <img class='img-responsive' src="http://localhost:8000/media/images/2017/03/02/dutch.JPG" />
+        <img class='img-responsive' style="height:"src="http://localhost:8000/media/images/2017/03/02/dutch_image_eK8TEFy.png/" />
     </div>
-
     <div class='col-sm-4'>
-        <h3 class='text-center'>Dutch Coffee</h3>
-        <h4 class='text-right'>￦12,000</h4>
+        <h3 class='text-center'>매일 새로 만드는 DutchCoffee</h3>
+        <h4 class='text-right'>가격: ￦12,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}
-
-        <p class="text-right"><input class='btn' type='submit' value='예약' /></p>
+            <input class='btn' type='submit' value='예약' />
         </form>
+        <p class='text-right'>총액: ￦<span id="total" class="total">{{ total }}</span>,000</p>
     </div>
 </div>
 {% endblock %}
