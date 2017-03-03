@@ -19,13 +19,14 @@
     <div class='row main-content'>
         <div class='col-sm-12 text-center'>
             {% include "naver_map.html" %}
+			<!--fixme 지도에 기본적으로 주소가 나오고 클릭시 없애는 기능도 필요할 듯 -->
         </div>
         <div class='col-sm-18 col-lg-12 col-sm-6 text-center'>
             <br/>
             <!-- <p class='lead'><a href="http://map.naver.com/local/siteview.nhn?code=37755773&_ts=1487514401638"><input type='submit' value="네이버 지도앱에서 보기" class="btn btn-success btn-lg"/></a></p>        {# fixme #} -->
-            <p class='lead'>주소: {{ address }} <br/>{{ address_short }}</p>
-            <p class='lead'>영업 시간: {{ working_time }}</p>
-            <p class='lead'>전화 번호: {{ phone }}</p>     {# fixme #}
+            <p class='lead'><i class="fa fa-map-marker" aria-hidden="true"></i> {{ address }} <br/>{{ address_short }}</p>
+            <p class='lead'><i class="fa fa-clock-o" aria-hidden="true"></i> {{ working_time }}</p>
+            <p class='lead'><i class="fa fa-phone" aria-hidden="true"></i> {{ phone }}</p>     {# fixme #}
         </div>
     </div>
 

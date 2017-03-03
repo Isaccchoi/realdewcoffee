@@ -37,7 +37,7 @@ def location(request):
         "id" : "1007",
         'address': "서울특별시 마포구 월드컵북로1길 26-17",
         'address_short': "서울특별시 마포구 서교동 352-7",
-        'working_time': "08:00 ~ 23:00",
+        'working_time': "09:00 ~ 21:00",
         'phone': "02-333-5945"
         # fixme 아이콘 추가
     }
@@ -87,6 +87,7 @@ class DutchOrderView(View):
             order.total_charge = order.quantity * 12000
             order.save()
             return redirect('dutch_order')
+            # fixme 완료시 Home으로 Redirect시키며 FlashMessage 보내주면 좋을듯
         raise Http404 # Form이 valid 하지 않을 경우 Http404 일으킴
 
     def get(self, request, *args, **kwargs):
