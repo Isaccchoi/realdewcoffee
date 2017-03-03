@@ -73,12 +73,14 @@ class DutchOrderView(View):
     template_name = 'main/dutch_order.html'
 
     def post(self, request, *args, **kwargs):
+        form = DutchOrderForm(request.POST)
         if form.is_valid():
+            order = form.save(commit=False)
             phone_num = form.cleaned_data.get('phone_regex')
             user, _ = User.objects.get_or_create(phone_number=phone_num)
             reserve_date = form.cleaned_data.get("seperate_date")
             reserve_time = form.cleaned_data.get("seperate_time")
-            quantity = form.cleaned_date.get("quantity")
+            quantity = form.cleaned_data.get("quantity")
             order.quantity = quantity
             order.reserve_at = datetime.combine(reserve_date, reserve_time)
             order.user = user
