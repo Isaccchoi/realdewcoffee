@@ -45,27 +45,27 @@ def location(request):
     return render(request, 'main/location.html', ctx)
 
 
-class AjaxableResponseMixin(object):
-    def form_invalid(self, form):
-        response = super(AjaxableResponseMixin, self).form_invalid(form)
-        if self.request.is_ajax():
-            return JsonResponse(form.errors, status=400)
-        return reponse
-
-    def form_valid(self, form):
-        response = super(AjaxableResponseMixin, self).form_valid(form)
-        if self.request.is_ajax():
-            qty = self.request.GET.get("qty", 1)
-            qty = int(qty)
-            price = 12000
-            total = qty * price
-            data = {
-                'total': total,
-            }
-            print("-"*50)
-            return JsonResponse(data)
-
-        return response
+# class AjaxableResponseMixin(object):
+#     def form_invalid(self, form):
+#         response = super(AjaxableResponseMixin, self).form_invalid(form)
+#         if self.request.is_ajax():
+#             return JsonResponse(form.errors, status=400)
+#         return reponse
+#
+#     def form_valid(self, form):
+#         response = super(AjaxableResponseMixin, self).form_valid(form)
+#         if self.request.is_ajax():
+#             qty = self.request.GET.get("qty", 1)
+#             qty = int(qty)
+#             price = 12000
+#             total = qty * price
+#             data = {
+#                 'total': total,
+#             }
+#             print("-"*50)
+#             return JsonResponse(data)
+#
+#         return response
 
 
 class DutchOrderView(View):

@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
@@ -15,14 +16,12 @@ $('.date-input').datepicker({
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-$('.quantity').change(function(){
-    var qty = $(".quantity").val()
+$('#id_quantity').change(function(){
+    var qty = $("#id_quantity").val()
     var total = $("#total").val()
-    var price = 12000
     var data = {
         qty: qty,
-        total: total,
-        price: price
+        total: total
     }
     console.log(data);
     $.ajax({
@@ -39,9 +38,8 @@ $('.quantity').change(function(){
     })
 });
 // initialize datepair
-var basicExampleEl = document.getElementById('basicExample');
-var datepair = new Datepair(basicExampleEl);
 {% endblock %}
+
 </script>
 
 
