@@ -26,15 +26,17 @@ def default_time():
 
 
 class DutchOrderForm(forms.ModelForm):
-    phone_regex = forms.RegexField(label="휴대폰 번호 (예: 010-1234-5678)",
+    phone_regex = forms.RegexField(label="휴대폰 번호",
+                    help_text="ex)010-1234-5678 형식으로 작성하세요",
                     regex="^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$",
                     error_messages={
                         'invalid': ("010-1234-5678 형식으로 12자리를 입력하세요.")
                     })
-    seperate_time = forms.TimeField(label="예약 날짜", input_formats=["%H:%M"],
+    seperate_time = forms.TimeField(label="예약 시간", input_formats=["%H:%M"],
                                     initial=default_time().strftime("%H:%M"),
                                     widget=forms.TimeInput(attrs={'class': 'time-input'}))
-    seperate_date = forms.DateField(label="예약 시간", input_formats=["%Y-%m-%d"],
+    seperate_date = forms.DateField(label="예약 날짜", input_formats=["%Y-%m-%d"],
+                                    help_text="새로 추출을 하기 때문에 24시간 이후로 잡으시는 것을 추천드립니다.",
                                     initial=default_time().strftime("%Y-%m-%d"),
                                     widget=forms.DateInput(attrs={'class': 'date-input'}))
 

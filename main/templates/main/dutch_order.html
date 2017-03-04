@@ -44,19 +44,19 @@ $('#id_quantity').change(function(){
 
 
 {% block content %}
-<div class='row'>
+<div class='row' style="margin-bottom: 30px">
     <h1 class="text-center">Dutch Coffee 주문</h1>
     <hr/>
     <br/>
     <div class='col-sm-8'>
-        <img class='img-responsive' src="http://localhost:8000/media/images/2017/03/02/dutch.JPG" />
+        <img class='img-responsive' style="height:600px"src="{{ image.image.url }}" />
     </div>
     <div class='col-sm-4'>
         <h3 class='text-center'>매일 새로 만드는 DutchCoffee</h3>
         <h4 class='text-right'>가격: ￦12,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}
-            <input class='btn' type='submit' value='예약' />
+            <p class="text-right"><input class='btn' type='submit' value='예약' /></p>
         </form>
         <p class='text-right'>총액: ￦<span id="total" class="total">{{ total }}</span>,000</p>
     </div>
