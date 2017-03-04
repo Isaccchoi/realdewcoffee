@@ -14,13 +14,20 @@ from .forms import DutchOrderForm
 from .models import User
 from .models import DutchOrder
 from .models import Image
+from .models import MainImage
 
 
 def home(request):
-    title = "안녕하세요"
+    greeting = "커피를 사랑하는 리얼듀 커피에 오신것을 환영합니다."
+    image = MainImage.objects.filter(location="main").filter(active=True)
+    left = MainImage.objects.filter(location="left").filter(active=True)
+    right = MainImage.objects.filter(location="right").filter(active=True)
 
     ctx = {
-        "title": title,
+        "greeting": greeting,
+        "images": image,
+        "left": left,
+        "right": right,
     }
 
     return render(request, 'home.html', ctx)

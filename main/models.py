@@ -26,10 +26,15 @@ class Image(models.Model):
         return self.name
 
 
+
 class MainImage(models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to='images/%Y/%m/%d', null=True, blank=True)
+    active = models.BooleanField(default=True)
+    location = models.CharField(max_length=50, null=True, blank=True)
 
+    def __str(self):
+        return self.name
 
 
 

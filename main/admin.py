@@ -26,8 +26,14 @@ class DutchOrderAdmin(admin.ModelAdmin):
 
 admin.site.register(DutchOrder, DutchOrderAdmin)
 
+
 admin.site.register(User)
 
 admin.site.register(CategoryForImage)
 
-admin.site.register(MainImage)
+class MainImageAdmin(admin.ModelAdmin):
+    fields = ('name', 'image', 'location', 'active')
+    models = MainImage
+    list_display = ('name', 'location')
+
+admin.site.register(MainImage, MainImageAdmin)

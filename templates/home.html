@@ -25,9 +25,18 @@
 
 	 <div class="container">
 		<div class="row">
-			<div class='text-center'>
+			<div class='col-sm-12 text-center'>
 				<h1 class='main-text'>Realdew Coffee</h1>
-				<p class='main-text'>커피를 사랑하는 리얼듀 커피에 오신것을 환영합니다.</p>
+				<p>{{ greeting }}</p>
+				<div class="slide">
+					<button class="prev" type="button"><img src="{{ left.image.url }}" alt=""/></button>
+					<ul>
+						{% for image in images %}
+							<li><img src="{{ image.image.url }}" alt=""/></li>
+						{% endfor %}
+					</ul>
+					<button class="next" type="button"><img src="{{ right.image.url }}" alt=""/></button>
+				</div>
 			</div>
 		</div>
 	</div>
