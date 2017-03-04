@@ -19,9 +19,9 @@ from .models import MainImage
 
 def home(request):
     greeting = "커피를 사랑하는 리얼듀 커피에 오신것을 환영합니다."
-    image = MainImage.objects.filter(location="main").filter(active=True)
-    left = MainImage.objects.filter(location="left").filter(active=True)
-    right = MainImage.objects.filter(location="right").filter(active=True)
+    image = MainImage.objects.filter(active=True).filter(location="main")
+    left = MainImage.objects.filter(active=True).get(location="left")
+    right = MainImage.objects.filter(active=True).get(location="right")
 
     ctx = {
         "greeting": greeting,

@@ -25,17 +25,17 @@
 
 	 <div class="container">
 		<div class="row">
-			<div class='col-sm-12 text-center'>
+			<div id='img-slide' class='col-sm-12 text-center'>
 				<h1 class='main-text'>Realdew Coffee</h1>
 				<p>{{ greeting }}</p>
 				<div class="slide">
-					<button class="prev" type="button"><img src="{{ left.image.url }}" alt=""/></button>
+					<button id="img-slide-btn" class="prev" type="button"><img src="{{ left.image.url }}" alt=""/></button>
 					<ul>
 						{% for image in images %}
-							<li><img src="{{ image.image.url }}" alt=""/></li>
+							<li><img id="img-slide-img" src="{{ image.image.url }}" alt=""/></li>
 						{% endfor %}
 					</ul>
-					<button class="next" type="button"><img src="{{ right.image.url }}" alt=""/></button>
+					<button id="img-slide-btn" class="next" type="button"><img src="{{ right.image.url }}" alt=""/></button>
 				</div>
 			</div>
 		</div>
