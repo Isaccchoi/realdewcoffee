@@ -4,10 +4,12 @@ from django.contrib import admin
 from .models import Image
 from .models import DutchOrder
 from .models import User
+from .models import CategoryForImage
+from .models import MainImage
 
 class ImageAdmin(admin.ModelAdmin):
     model = Image
-    list_display = ('name', 'image')
+    list_display = ('name', 'image', 'categotyimage')
 
 admin.site.register(Image, ImageAdmin)
 
@@ -25,3 +27,7 @@ class DutchOrderAdmin(admin.ModelAdmin):
 admin.site.register(DutchOrder, DutchOrderAdmin)
 
 admin.site.register(User)
+
+admin.site.register(CategoryForImage)
+
+admin.site.register(MainImage)

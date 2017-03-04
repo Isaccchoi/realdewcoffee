@@ -58,6 +58,7 @@ class HandDrip(models.Model):
         ordering = ["-roasting_date", "-id"]
 
 
+
 class Desert(models.Model):
     name = models.CharField(max_length=120, null=False, blank=False)
     name_eng = models.CharField(max_length=120, null=False, blank=False)
@@ -70,3 +71,6 @@ class Desert(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ["id"]

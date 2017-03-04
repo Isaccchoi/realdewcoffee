@@ -9,12 +9,27 @@ from datetime import time
 from datetime import timedelta
 
 # Create your models here.
-class Image(models.Model):
-    name = models.CharField(max_length=150)
-    image = models.ImageField(upload_to='images/%Y/%m/%d', null=True, blank=True)
+class CategoryForImage(models.Model):
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
+
+
+
+class Image(models.Model):
+    name = models.CharField(max_length=150)
+    image = models.ImageField(upload_to='images/%Y/%m/%d', null=True, blank=True)
+    categotyimage = models.ForeignKey(CategoryForImage, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class MainImage(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='images/%Y/%m/%d', null=True, blank=True)
+
 
 
 
@@ -47,3 +62,6 @@ class DutchOrder(models.Model):
 
     def __str__(self):
         return self.user.phone_number
+
+    class Meta:
+        ordering = ['created_at', '-id']
