@@ -25,18 +25,9 @@
 
 	 <div class="container">
 		<div class="row">
-			<div id='img-slide' class='col-sm-12 text-center'>
+			<div class='text-center'>
 				<h1 class='main-text'>Realdew Coffee</h1>
-				<p>{{ greeting }}</p>
-				<div class="slide">
-					<button id="img-slide-btn" class="prev" type="button"><img src="{{ left.image.url }}" alt=""/></button>
-					<ul>
-						{% for image in images %}
-							<li><img id="img-slide-img" src="{{ image.image.url }}" alt=""/></li>
-						{% endfor %}
-					</ul>
-					<button id="img-slide-btn" class="next" type="button"><img src="{{ right.image.url }}" alt=""/></button>
-				</div>
+				<p class='main-text'>커피를 사랑하는 리얼듀 커피에 오신것을 환영합니다.</p>
 			</div>
 		</div>
 	</div>

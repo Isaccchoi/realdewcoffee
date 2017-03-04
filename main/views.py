@@ -22,15 +22,22 @@ def home(request):
     image = MainImage.objects.filter(active=True).filter(location="main")
     left = MainImage.objects.filter(active=True).get(location="left")
     right = MainImage.objects.filter(active=True).get(location="right")
+    a11 = MainImage.objects.get(name="a11")
+    b21 = MainImage.objects.get(name="b21")
+    b05 = MainImage.objects.get(name="b05")
+    loading = MainImage.objects.get(name="loading")
 
     ctx = {
         "greeting": greeting,
         "images": image,
         "left": left,
         "right": right,
+        "a11": a11,
+        "b21":b21,
+        "loading":loading,
     }
 
-    return render(request, 'home.html', ctx)
+    return render(request, 'main/home.html', ctx)
     # fixme 이미지 슬라이드 기능 추가 필요
 
 

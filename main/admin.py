@@ -34,6 +34,6 @@ admin.site.register(CategoryForImage)
 class MainImageAdmin(admin.ModelAdmin):
     fields = ('name', 'image', 'location', 'active')
     models = MainImage
-    list_display = ('name', 'location')
+    list_display = ('name', 'location', 'image')
 
 admin.site.register(MainImage, MainImageAdmin)
