@@ -51,7 +51,7 @@ html,body { height: 100%; margin: 0; padding: 0; }
 min-height: 100%;
 // relative 선언을 통해 하단바의 absolute position 이 정확한 위치에 오도록 한다.
 position: relative;
-padding-bottom: 50px;
+padding-bottom: 10px;
 }
 
 #footer {
