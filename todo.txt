@@ -1,0 +1,10 @@
+necessary
+1. Add bootsrap Flash message after colmpletion Dutch order(and... how about email to the orderer???? or kakaotalk twice. first onne is 
+after order, second one is the before one or two hour the reservation time)
+2. Check share button(facebook, instagram)
+3. Welcome menu(introducing about us)
+
+
+optional
+1. add board menu(Everyone can write, upload image) - It's good, but if it's make hard to managing the site)
+2. Update UI of navbar (cafe name should be on middle of top, menu buttons move to middle of under the cafe name) 
