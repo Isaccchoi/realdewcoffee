@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.conf import settings
 from django.http import Http404
 from django.http import JsonResponse
@@ -5,6 +6,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
+from django.urls import reverse_lazy
 
 from datetime import datetime
 from datetime import timedelta
@@ -100,6 +102,9 @@ class DutchOrderView(View):
             order.user = user
             order.total_charge = order.quantity * 12000
             order.save()
+            messages.success(request, "%s월%s일 %s시 %s분으로 예약이 완료되었습니다."\
+                                %(order.reserve_at.month, order.reserve_at.day,
+                                  order.reserve_at.hour, order.reserve_at.minute))
             return redirect('dutch_order')
             # fixme 완료시 Home으로 Redirect시키며 FlashMessage 보내주면 좋을듯
         raise Http404 # Form이 valid 하지 않을 경우 Http404 일으킴
