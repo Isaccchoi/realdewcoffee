@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.conf import settings
+from django.core.mail import EmailMessage
 from django.http import Http404
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -83,6 +84,16 @@ def location(request):
 #
 #         return response
 
+def sendmail(phone, qty,reserve_at):
+    EmailMessage(
+        "더치 예약",
+        "%s월 %s일 %s시 %s분 더치 %s병 예약, 연락처: %s"\
+                %(reserve_at.month, reserve_at.day, reserve_at.hour,
+                reserve_at.minute, qty, phone),
+        ["realdew@naver.com"],
+        ["isaccchoi@naver.com"],
+    ).send()
+
 
 class DutchOrderView(View):
     model = Image
@@ -105,6 +116,7 @@ class DutchOrderView(View):
             messages.success(request, "%s월%s일 %s시 %s분으로 예약이 완료되었습니다."\
                                 %(order.reserve_at.month, order.reserve_at.day,
                                   order.reserve_at.hour, order.reserve_at.minute))
+            sendmail(phone_num, quantity, order.reserve_at)
             return redirect('dutch_order')
             # fixme 완료시 Home으로 Redirect시키며 FlashMessage 보내주면 좋을듯
         raise Http404 # Form이 valid 하지 않을 경우 Http404 일으킴
