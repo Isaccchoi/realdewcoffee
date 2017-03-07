@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.conf import settings
-from django.core.mail import EmailMessage
+from django.core import mail
+
 from django.http import Http404
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -41,7 +42,7 @@ def home(request):
     }
 
     return render(request, 'main/home.html', ctx)
-    # fixme 이미지 슬라이드 기능 추가 필요
+    
 
 
 def location(request):
@@ -56,43 +57,25 @@ def location(request):
         'address_short': "서울특별시 마포구 서교동 352-7",
         'working_time': "09:00 ~ 21:00",
         'phone': "02-333-5945"
-        # fixme 아이콘 추가
     }
 
     return render(request, 'main/location.html', ctx)
 
 
-# class AjaxableResponseMixin(object):
-#     def form_invalid(self, form):
-#         response = super(AjaxableResponseMixin, self).form_invalid(form)
-#         if self.request.is_ajax():
-#             return JsonResponse(form.errors, status=400)
-#         return reponse
-#
-#     def form_valid(self, form):
-#         response = super(AjaxableResponseMixin, self).form_valid(form)
-#         if self.request.is_ajax():
-#             qty = self.request.GET.get("qty", 1)
-#             qty = int(qty)
-#             price = 12000
-#             total = qty * price
-#             data = {
-#                 'total': total,
-#             }
-#             print("-"*50)
-#             return JsonResponse(data)
-#
-#         return response
 
-def sendmail(phone, qty,reserve_at):
-    EmailMessage(
-        "더치 예약",
-        "%s월 %s일 %s시 %s분 더치 %s병 예약, 연락처: %s"\
-                %(reserve_at.month, reserve_at.day, reserve_at.hour,
-                reserve_at.minute, qty, phone),
-        ["realdew@naver.com"],
-        ["isaccchoi@naver.com"],
-    ).send()
+# def sendmail(phone, qty,reserve_at):
+#     connection = mail.get_connection()
+#     connection.open()
+#     email = mail.EmailMessage(
+#         "Dutch reservation",
+#         "%s월 %s일 %s시 %s분 더치 %s병 예약, 연락처: %s"\
+#                 %(reserve_at.month, reserve_at.day, reserve_at.hour,
+#                 reserve_at.minute, qty, phone),
+#         "realdew@naver.com",
+#         ["isaccchoi@naver.com",],
+#     )
+#     email.send()
+#     connection.close()
 
 
 class DutchOrderView(View):
@@ -116,9 +99,9 @@ class DutchOrderView(View):
             messages.success(request, "%s월%s일 %s시 %s분으로 예약이 완료되었습니다."\
                                 %(order.reserve_at.month, order.reserve_at.day,
                                   order.reserve_at.hour, order.reserve_at.minute))
-            sendmail(phone_num, quantity, order.reserve_at)
+            # sendmail(phone_num, quantity, order.reserve_at)
             return redirect('dutch_order')
-            # fixme 완료시 Home으로 Redirect시키며 FlashMessage 보내주면 좋을듯
+
         raise Http404 # Form이 valid 하지 않을 경우 Http404 일으킴
 
     def get(self, request, *args, **kwargs):
@@ -143,32 +126,3 @@ class DutchOrderView(View):
         }
 
         return render(request, "main/dutch_order.html", ctx)
-# class DutchOrderView(AjaxableResponseMixin, FormView):
-#     form_class = DutchOrderForm
-#     template_name = 'main/dutch_order.html'
-#     model = Image
-#
-#
-#     def get_queryset(self):
-#         img = Image.objects.get(name="dutch")
-#
-#
-#     def form_valid(self, form):
-#         order = form.save(commit=False)
-#         if form.is_valid():
-#             phone_num = form.cleaned_data.get('phone_regex')
-#             user, _ = User.objects.get_or_create(phone_number=phone_num)
-#             reserve_date = form.cleaned_data.get("seperate_date")
-#             reserve_time = form.cleaned_data.get("seperate_time")
-#             quantity = form.cleaned_date.get("quantity")
-#             order.quantity = quantity
-#             order.reserve_at = datetime.combine(reserve_date, reserve_time)
-#             order.user = user
-#             order.total_charge = order.quantity * 12000
-#             order.save()
-#             return redirect('dutch_order')
-#
-#         raise Http404
-
-
-#fixme
