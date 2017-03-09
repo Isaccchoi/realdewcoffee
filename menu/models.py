@@ -47,6 +47,8 @@ class HandDrip(models.Model):
     price = models.PositiveIntegerField(null=False, blank=False)
     on_sale = models.BooleanField(default=True)
     roasting_date = models.DateField()
+    start_sale_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    end_sale_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -56,7 +58,6 @@ class HandDrip(models.Model):
 
     class Meta:
         ordering = ["-roasting_date", "-id"]
-
 
 
 class Desert(models.Model):
@@ -71,6 +72,3 @@ class Desert(models.Model):
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        ordering = ["id"]
