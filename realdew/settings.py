@@ -182,3 +182,23 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 #facebook
 SOCIAL_AUTH_FACEBOOK_KEY = '1873774206233375'
 SOCIAL_AUTH_FACEBOOK_SECRET = '6ef46b636b8d32578d4ca8aace28ad5e'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'fields': 'id, name, email, age_range'
+}
+
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    # 'social.pipeline.user.create_user',
+    'accounts.social.create_user',
+    'accounts.social.update_avatar',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+)
