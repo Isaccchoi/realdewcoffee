@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block style %}
+
+.text-label{
+    color: #cdcdcd;
+    font: bold;
+}
+
+
+{% endblock %}
+
 <script>
 {% block jquery %}
 $('.time-input').timepicker({
@@ -39,6 +49,26 @@ $('#id_quantity').change(function(){
 		}
     })
 });
+
+$('#id_phone_regex').each(function(){
+    var defaultval = "010-1234-5678";
+    this.value = defaultval;
+    $(this).addClass("text-label");
+
+    $(this).focus(function(){
+        if(this.value == defaultval){
+            this.value = '';
+            $(this).removeClass('text-label');
+        }
+    });
+    $(this).blur(function(){
+        if(this.value == ''){
+            this.value = defaultval;
+            $(this).addClass("text-label");
+        }
+    });
+});
+
 {% endblock %}
 </script>
 

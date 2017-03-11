@@ -29,6 +29,7 @@ class DutchOrderForm(forms.ModelForm):
     phone_regex = forms.RegexField(label="휴대폰 번호",
                     help_text="ex)010-1234-5678 형식으로 작성하세요",
                     regex="^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$",
+                    # initial="010-1234-5678",
                     error_messages={
                         'invalid': ("010-1234-5678 형식으로 12자리를 입력하세요.")
                     })
