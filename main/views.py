@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
+from django.utils import timezone
 
 from datetime import datetime
 from datetime import timedelta
@@ -42,7 +43,7 @@ def home(request):
     }
 
     return render(request, 'main/home.html', ctx)
-    
+
 
 
 def location(request):
@@ -72,7 +73,7 @@ def location(request):
 #                 %(reserve_at.month, reserve_at.day, reserve_at.hour,
 #                 reserve_at.minute, qty, phone),
 #         "realdew@naver.com",
-#         ["isaccchoi@naver.com",],
+#         to = ("isaccchoi@naver.com","beredfaced@naver.com"),
 #     )
 #     email.send()
 #     connection.close()
@@ -92,7 +93,8 @@ class DutchOrderView(View):
             reserve_time = form.cleaned_data.get("seperate_time")
             quantity = form.cleaned_data.get("quantity")
             order.quantity = quantity
-            order.reserve_at = datetime.combine(reserve_date, reserve_time)
+            order.reserve_at = datetime(reserve_date.year, reserve_date.month, reserve_date.day, reserve_time.hour, reserve_time.minute, 0 , tzinfo=timezone.get_current_timezone())
+            # order.reserve_at = datetime.combine(reserve_date, reserve_time, tzinfo=timezone.get_current_timezone())
             order.user = user
             order.total_charge = order.quantity * 12000
             order.save()
