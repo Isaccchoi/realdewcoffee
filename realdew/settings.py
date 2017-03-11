@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'menu',
     'main',
     'crispy_forms',
+    'social.apps.django_app.default',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -163,3 +166,19 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'chlwlgusdld@gmail.com'
 EMAIL_HOST_PASSWORD = 'CHLWlqkf406*'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+AUTHENTICATION_BACKENDS = [
+    'social.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+#facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '1873774206233375'
+SOCIAL_AUTH_FACEBOOK_SECRET = '6ef46b636b8d32578d4ca8aace28ad5e'

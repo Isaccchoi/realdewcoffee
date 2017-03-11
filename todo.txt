@@ -2,7 +2,7 @@ necessary
 complete - 1. Add bootsrap Flash message after colmpletion Dutch order
 2.email to the orderer???? or kakaotalk twice. first onne is after order, second one is the before one or two hour the reservation time)
 complete - 3. Check share button(facebook, instagram) - facebook link have a issue, because this project didn't have a real URL
-4. Welcome menu(introducing about us)
+don't need - 4. Welcome menu(introducing about us)
 complete - 5. Show error message when reservation time is earlier than default time
 6. dutch_order page is login required
 7. sign up is only just Facebook, Naver account
