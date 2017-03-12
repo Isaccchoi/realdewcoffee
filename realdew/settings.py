@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'main',
     'crispy_forms',
     'social.apps.django_app.default',
+    # 'social_auth',
 ]
 
 MIDDLEWARE = [
@@ -159,22 +160,26 @@ NAVER_CLIENT_ID = 'szap2ec6EBjwpHiaMoJN'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-# Host for sending e-mail.
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'chlwlgusdld@gmail.com'
-EMAIL_HOST_PASSWORD = 'CHLWlqkf406*'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
 
 
 AUTHENTICATION_BACKENDS = [
     'social.backends.facebook.FacebookOAuth2',
+
     'django.contrib.auth.backends.ModelBackend',
 ]
 
 
+LOGIN_URL = '/login/'
 
+LOGIN_REDIRECT_URL = '/photos/new/'
+
+LOGOUT_URL = '/logout/'
+
+
+#Social auth
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
@@ -183,22 +188,22 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_FACEBOOK_KEY = '1873774206233375'
 SOCIAL_AUTH_FACEBOOK_SECRET = '6ef46b636b8d32578d4ca8aace28ad5e'
 
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-  'fields': 'id, name, email, age_range'
-}
+# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+#   'fields': 'id, name, email, age_range'
+# }
 
 
-SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
-    # 'social.pipeline.user.create_user',
-    'accounts.social.create_user',
-    'accounts.social.update_avatar',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details'
-)
+# SOCIAL_AUTH_PIPELINE = (
+#     'social.pipeline.social_auth.social_details',
+#     'social.pipeline.social_auth.social_uid',
+#     'social.pipeline.social_auth.auth_allowed',
+#     'social.pipeline.social_auth.social_user',
+#     'social.pipeline.user.get_username',
+#     # 'social.pipeline.user.create_user',
+#     'accounts.social.create_user',
+#     'accounts.social.update_avatar',
+#     'social.pipeline.social_auth.associate_user',
+#     'social.pipeline.social_auth.load_extra_data',
+#     'social.pipeline.user.user_details'
+# )
