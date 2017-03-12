@@ -34,15 +34,38 @@ class MenuListView(ListView):
 
 
 
-class MenuDetailView(DetailView):
-    model = Category
-    template_name = "menu/menu_detail.html"
-    context_object_name = "details"
-    slug_url_kwargs = "not_slug"
+# class MenuDetailView(DetailView):
+#     model = Category
+#     template_name = "menu/menu_detail.html"
+#     context_object_name = "details"
+#     slug_url_kwargs = "not_slug"
+#
+#     def get_queryset(self):
+#         beverage = Beverage.objects.filter(slug=self.kwargs['slug'])
+#         if beverage == None:
+#             raise Http404
+#
+#         return beverage
 
-    def get_queryset(self):
-        beverage = Beverage.objects.filter(slug=self.kwargs['slug'])
-        if beverage == None:
-            raise Http404
+class HandDripHistoryView(ListView):
+    queryset = HandDrip.objects.all().filter(on_sale=False)
+    template_name = "menu/handdrip.html"
+    context_object_name = "drips"
+    pagenate_by = 2
 
-        return beverage
+    # def get_context_data(self, **kwargs):
+    #     context = super(HandDripHistoryView, self).get_context_data(**kwargs)
+    #     drips = HandDrip.objects.all().filter(on_sale=False)
+    #     paginator = Paginator(drips, self.paginate_by)
+    #
+    #     page = self.request.GET.get('page')
+    #
+    #     try:
+    #         file_exams = paginator.page(page)
+    #     except PageNotAnInteger:
+    #         file_exams = paginator.page(1)
+    #     except EmptyPage:
+    #         file_exams = paginator.page(paginator.num_pages)
+    #
+    #     context['drips'] = file_exams
+    #     return context

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block style %}
+
+.name{
+    font-size: 16px;
+}
+
+.name-eng{
+    color: gray;
+}
+
+.hot{
+    color: red;
+}
+
+.ice{
+    color: blue;
+}
+
+
+{% endblock %}
+
+{% block content %}
+
+<div class='row main-contant'>
+    <h1 class='text-center'>HandDrip 기록</h1>
+    <hr/>
+    <br/>
+    {% if drips %}
+        <div class='col-sm-14'>
+            <table class='table'>
+                {% for drip in drips %}
+                    {% if not drip.on_sale %}
+                    <tr>
+                        <td><span class="name">{{ drip.region}} {{ drip.name }}</span>
+                            <br/>
+                            <span class="name-eng">({{ drip.region_eng }} {{ drip.name_eng }})</span>
+                        </td>
+                        <td>Roasting Date: {{ drip.roasting_date }}</td>
+                        <td>판매 기간: {{ drip.start_sale_date }} ~ {{ drip.end_sale_date }}</td>
+                        <td class="text-right">￦{{ drip.price }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+            {% if is_paginated %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+
+                    {% for i in paginator.page_range %}
+                        {% if page_obj.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
