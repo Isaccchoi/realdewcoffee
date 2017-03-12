@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'menu',
     'main',
     'crispy_forms',
-    'social.apps.django_app.default',
+    # 'social.apps.django_app.default',
     # 'social_auth',
 ]
 
@@ -67,8 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',
+                # 'social.apps.django_app.context_processors.backends',
+                # 'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -165,11 +165,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 
-AUTHENTICATION_BACKENDS = [
-    'social.backends.facebook.FacebookOAuth2',
-
-    'django.contrib.auth.backends.ModelBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#     'social.backends.facebook.FacebookOAuth2',
+#
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
 
 
 LOGIN_URL = '/login/'
@@ -180,13 +180,13 @@ LOGOUT_URL = '/logout/'
 
 
 #Social auth
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
-
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-
-#facebook
-SOCIAL_AUTH_FACEBOOK_KEY = '1873774206233375'
-SOCIAL_AUTH_FACEBOOK_SECRET = '6ef46b636b8d32578d4ca8aace28ad5e'
+# SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+#
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+#
+# #facebook
+# SOCIAL_AUTH_FACEBOOK_KEY = '1873774206233375'
+# SOCIAL_AUTH_FACEBOOK_SECRET = '6ef46b636b8d32578d4ca8aace28ad5e'
 
 # SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 # SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {

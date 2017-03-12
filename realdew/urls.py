@@ -3,7 +3,7 @@ from django.conf.urls import include
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
+# from django.contrib.auth import views as auth_views
 
 from main import views as main_views
 from main.views import location
@@ -16,9 +16,9 @@ urlpatterns = [
     url(r'^menu/', include('menu.urls')),
     url(r'^location/$', location, name='location'),
     url(r'^order/$', DutchOrderView.as_view(), name='dutch_order'),
-    url(r'^login/$', auth_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
-    url(r'^oauth/', include('social.apps.django_app.urls', namespace='social')),
+    # url(r'^login/$', auth_views.login, name='login'),
+    # url(r'^logout/$', auth_views.logout, name='logout'),
+    # url(r'^oauth/', include('social.apps.django_app.urls', namespace='social')),
     url(r'^admin/', admin.site.urls),
 ]
 
