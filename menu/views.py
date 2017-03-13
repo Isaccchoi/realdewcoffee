@@ -48,10 +48,10 @@ class MenuListView(ListView):
 #         return beverage
 
 class HandDripHistoryView(ListView):
-    queryset = HandDrip.objects.all().filter(on_sale=False)
+    queryset = HandDrip.objects.filter(on_sale=False)
     template_name = "menu/handdrip.html"
     context_object_name = "drips"
-    pagenate_by = 2
+    paginate_by = 10
 
     # def get_context_data(self, **kwargs):
     #     context = super(HandDripHistoryView, self).get_context_data(**kwargs)

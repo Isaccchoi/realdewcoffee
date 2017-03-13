@@ -92,7 +92,10 @@ class DutchOrderView(View):
             reserve_date = form.cleaned_data.get("seperate_date")
             reserve_time = form.cleaned_data.get("seperate_time")
             quantity = form.cleaned_data.get("quantity")
+            emil = form.cleaned_data.get("email")
+            
             order.quantity = quantity
+            order.email = email
             order.reserve_at = datetime(reserve_date.year, reserve_date.month, reserve_date.day, reserve_time.hour, reserve_time.minute, 0 , tzinfo=timezone.get_current_timezone())
             # order.reserve_at = datetime.combine(reserve_date, reserve_time, tzinfo=timezone.get_current_timezone())
             order.user = user

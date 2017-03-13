@@ -64,6 +64,7 @@ class DutchOrder(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     reserve_at = models.DateTimeField(null=False, blank=True)
     total_charge = models.PositiveIntegerField(null=False, blank=False)
+    email = models.EmailField(null=True, blank=False)
 
     def __str__(self):
         return self.user.phone_number
