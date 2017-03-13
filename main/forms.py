@@ -43,7 +43,7 @@ class DutchOrderForm(forms.ModelForm):
 
     class Meta:
         model = DutchOrder
-        fields = ('quantity', 'email')
+        fields = ('quantity', 'email',)
         labels = {
             'quantity': _('수량'),
             'email':_('이메일'),
