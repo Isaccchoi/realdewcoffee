@@ -12,7 +12,8 @@ from main.views import DutchOrderView
 
 
 urlpatterns = [
-    url(r'^$', main_views.home , name='home'),
+    url(r'^$', main_views.home, name='home'),
+    url(r'^aboutus/$', main_views.aboutus, name='aboutus'),
     url(r'^menu/', include('menu.urls')),
     url(r'^location/$', location, name='location'),
     url(r'^order/$', DutchOrderView.as_view(), name='dutch_order'),

@@ -45,6 +45,13 @@ def home(request):
     return render(request, 'main/home.html', ctx)
 
 
+def aboutus(request):
+    ctx = {
+        "title": "About Us",
+    }
+    return render(request, 'about.html', ctx)
+
+
 
 def location(request):
     ctx = {
@@ -93,7 +100,7 @@ class DutchOrderView(View):
             reserve_time = form.cleaned_data.get("seperate_time")
             quantity = form.cleaned_data.get("quantity")
             emil = form.cleaned_data.get("email")
-            
+
             order.quantity = quantity
             order.email = email
             order.reserve_at = datetime(reserve_date.year, reserve_date.month, reserve_date.day, reserve_time.hour, reserve_time.minute, 0 , tzinfo=timezone.get_current_timezone())

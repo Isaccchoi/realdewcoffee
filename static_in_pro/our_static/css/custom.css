@@ -93,6 +93,14 @@ background-color: silver;
 }
 
 
+.navbar-a-tag {
+    padding-top: 33px;
+}
+
+.navbar-a-tag-ul{
+	font-size:20px;
+}
+
 /*jssor image slider css*/
 .jssorb05 {
     position: absolute;
