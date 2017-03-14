@@ -46,8 +46,23 @@ def home(request):
 
 
 def aboutus(request):
+    title = "About Us"
+    image = MainImage.objects.filter(active=True).filter(location="main")
+    left = MainImage.objects.filter(active=True).get(location="left")
+    right = MainImage.objects.filter(active=True).get(location="right")
+    a11 = MainImage.objects.get(name="a11")
+    b21 = MainImage.objects.get(name="b21")
+    b05 = MainImage.objects.get(name="b05")
+    loading = MainImage.objects.get(name="loading")
+
     ctx = {
-        "title": "About Us",
+        "title": title,
+        "images": image,
+        "left": left,
+        "right": right,
+        "a11": a11,
+        "b21":b21,
+        "loading":loading,
     }
     return render(request, 'about.html', ctx)
 
