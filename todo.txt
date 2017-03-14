@@ -1,13 +1,15 @@
 necessary
 complete - 1. Add bootsrap Flash message after colmpletion Dutch order
-2.email to the orderer???? or kakaotalk twice. first onne is after order, second one is the before one or two hour the reservation time)
+2.Authenticate phone number
 complete - 3. Check share button(facebook, instagram) - facebook link have a issue, because this project didn't have a real URL
 don't need - 4. Welcome menu(introducing about us)
 complete - 5. Show error message when reservation time is earlier than default time
 
 cancel python3-openid issue - 6. dutch_order page is login required
 cancel python3-openid issue - 7. sign up is only just Facebook, Naver account
-8. handdrip history view
+complete - 8. handdrip history view
+9. Add About Us
+
 
 
 
