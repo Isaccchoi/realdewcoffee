@@ -49,8 +49,12 @@ class DutchOrderForm(forms.ModelForm):
             'email':_('이메일'),
             }
 
-
-    # def clean(self):
+    # def clean_phone_regex(self):
+    #     phone_regex = self.cleaned_data['phone_regex']
+    #     if phone_regex == "010-1234-5678":
+    #         raise forms.ValidationError("올바른 번호를 입력하세요.")
+    #     return phone_regex
+    # # def clean(self):
     #     cleaned_data = super(DutchOrderForm, self).clean()
     #     reserve_date = cleaned_data['seperate_date']
     #     reserve_time = cleaned_data['seperate_time']
