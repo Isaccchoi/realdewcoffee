@@ -10,7 +10,7 @@ cancel python3-openid issue - 7. sign up is only just Facebook, Naver account
 complete - 8. handdrip history view
 working - 9. Add About Us
 10. add image slider in aboutus with image owner was making source or something
-
+11. need to fix dutch order bug 
 
 
 optional

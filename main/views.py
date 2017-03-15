@@ -25,8 +25,8 @@ from .models import MainImage
 def home(request):
     greeting = "커피를 사랑하는 리얼듀 커피에 오신것을 환영합니다."
     image = MainImage.objects.filter(active=True).filter(location="main")
-    left = MainImage.objects.filter(active=True).get(location="left")
-    right = MainImage.objects.filter(active=True).get(location="right")
+    # left = MainImage.objects.filter(active=True).get(location="left")
+    # right = MainImage.objects.filter(active=True).get(location="right")
     a11 = MainImage.objects.get(name="a11")
     b21 = MainImage.objects.get(name="b21")
     b05 = MainImage.objects.get(name="b05")
@@ -35,10 +35,11 @@ def home(request):
     ctx = {
         "greeting": greeting,
         "images": image,
-        "left": left,
-        "right": right,
+        # "left": left,
+        # "right": right,
         "a11": a11,
         "b21":b21,
+        "b05":b05,
         "loading":loading,
     }
 
@@ -62,6 +63,7 @@ def aboutus(request):
         "right": right,
         "a11": a11,
         "b21":b21,
+        "b05":b05,
         "loading":loading,
     }
     return render(request, 'about.html', ctx)
