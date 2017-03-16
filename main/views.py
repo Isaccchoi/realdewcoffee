@@ -113,11 +113,11 @@ class DutchOrderView(View):
         if form.is_valid():
             order = form.save(commit=False)
             phone_num = form.cleaned_data.get('phone_regex')
-            if phone_num == "010-1234-5678":
-                form._errors["phone_num"] = ["번호를 확인하세요."]
-                del form.cleaned_data["phone_regex"]
-                messages.error(request, "연락처를 확인하세요.")
-                return redirect('dutch_order')
+            # if phone_num == "010-1234-5678":
+            #     form._errors["phone_num"] = ["번호를 확인하세요."]
+            #     del form.cleaned_data["phone_regex"]
+            #     messages.error(request, "연락처를 확인하세요.")
+            #     return redirect('dutch_order')
             user, _ = User.objects.get_or_create(phone_number=phone_num)
             reserve_date = form.cleaned_data.get("seperate_date")
             reserve_time = form.cleaned_data.get("seperate_time")
@@ -137,7 +137,7 @@ class DutchOrderView(View):
             # sendmail(phone_num, quantity, order.reserve_at)
             return redirect('dutch_order')
 
-        raise Http404 # Form이 valid 하지 않을 경우 Http404 일으킴
+        return redirect('dutch_order') # Form이 valid 하지 않을 경우 Http404 일으킴
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():

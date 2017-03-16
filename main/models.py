@@ -70,4 +70,4 @@ class DutchOrder(models.Model):
         return self.user.phone_number
 
     class Meta:
-        ordering = ['created_at', '-id']
+        ordering = ['-created_at', '-id']

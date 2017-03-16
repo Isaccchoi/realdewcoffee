@@ -21,6 +21,9 @@ def default_time():
     return able_time
 
 
+def validate_phone_regex(value):
+    if value == "010-1234-5678":
+        raise forms.ValidationError('전화번호를 확인하세요.')
 
 
 
@@ -32,7 +35,9 @@ class DutchOrderForm(forms.ModelForm):
                     # initial="010-1234-5678",
                     error_messages={
                         'invalid': ("010-1234-5678 형식으로 12자리를 입력하세요.")
-                    })
+                    },
+                    validators = [validate_phone_regex],
+                    )
     seperate_time = forms.TimeField(label="예약 시간", input_formats=["%H:%M"],
                                     initial=default_time().strftime("%H:%M"),
                                     widget=forms.TimeInput(attrs={'class': 'time-input'}))

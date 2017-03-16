@@ -43,6 +43,8 @@ $('#id_quantity').change(function(){
 
 
 
+
+
 // function mysetdefault(clickID, val){
 //     function setdefault(){
 //         var defaultval = val;
@@ -107,6 +109,18 @@ $('#id_email').each(function(){
     });
 });
 
+$(function() {
+    $("#reserve").click(function(){
+        if($("#id_phone_regex").val() == "010-1234-5678"){
+            $("#id_phone_regex").val("");
+        }
+        if($("#id_email").val() == "someone@example.com"){
+            $("#id_email").val("");
+        }
+    });
+});
+
+
 
 {% endblock %}
 </script>
@@ -125,7 +139,7 @@ $('#id_email').each(function(){
         <h4 class='text-right'>가격: ￦<span id="total" class="total">{{ total }}</span>,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}
-            <p class="text-right"><input class='btn' type='submit' value='예약' /></p>
+            <p class="text-right"><input id="reserve" class='btn' type='submit' value='예약' /></p>
         </form>
     </div>
 </div>
