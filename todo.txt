@@ -8,9 +8,9 @@ complete - 5. Show error message when reservation time is earlier than default t
 cancel python3-openid issue - 6. dutch_order page is login required
 cancel python3-openid issue - 7. sign up is only just Facebook, Naver account
 complete - 8. handdrip history view
-working - 9. Add About Us
-10. add image slider in aboutus with image owner was making source or something
-11. need to fix dutch order bug 
+complete - 9. Add About Us
+working10. add image slider in aboutus with image owner was making source or something
+complete 11. need to fix dutch order bug
 
 
 optional
