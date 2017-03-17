@@ -141,6 +141,7 @@ class DutchOrderView(FormView):
         ctx = self.get_context_data(**kwargs)
         ctx["form"] = form
         ctx["image"] = Image.objects.get(name="dutch")
+        ctx["total"] = 12
         return self.render_to_response(ctx)
 
 
