@@ -104,67 +104,8 @@ def location(request):
 #     connection.close()
 
 
-class DutchOrderView(View):
-    model = Image
-    template_name = 'main/dutch_order.html'
 
-    def post(self, request, *args, **kwargs):
-        form = DutchOrderForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            phone_num = form.cleaned_data.get('phone_regex')
-            # if phone_num == "010-1234-5678":
-            #     form._errors["phone_num"] = ["번호를 확인하세요."]
-            #     del form.cleaned_data["phone_regex"]
-            #     messages.error(request, "연락처를 확인하세요.")
-            #     return redirect('dutch_order')
-            user, _ = User.objects.get_or_create(phone_number=phone_num)
-            reserve_date = form.cleaned_data.get("seperate_date")
-            reserve_time = form.cleaned_data.get("seperate_time")
-            quantity = form.cleaned_data.get("quantity")
-            email = form.cleaned_data.get("email")
-
-            order.quantity = quantity
-            order.email = email
-            order.reserve_at = datetime(reserve_date.year, reserve_date.month, reserve_date.day, reserve_time.hour, reserve_time.minute, 0 , tzinfo=timezone.get_current_timezone())
-            # order.reserve_at = datetime.combine(reserve_date, reserve_time, tzinfo=timezone.get_current_timezone())
-            order.user = user
-            order.total_charge = order.quantity * 12000
-            order.save()
-            messages.success(request, "%s월%s일 %s시 %s분으로 예약이 완료되었습니다."\
-                                %(order.reserve_at.month, order.reserve_at.day,
-                                  order.reserve_at.hour, order.reserve_at.minute))
-            # sendmail(phone_num, quantity, order.reserve_at)
-            return redirect('dutch_order')
-
-        return redirect('dutch_order') # Form이 valid 하지 않을 경우 Http404 일으킴
-
-    def get(self, request, *args, **kwargs):
-        if request.is_ajax():
-            qty = request.GET.get("qty",1)
-            try:
-                total = int(qty) * 12
-            except:
-                total = None
-            data = {
-                'total': total,
-            }
-            return JsonResponse(data)
-
-
-        form = DutchOrderForm
-        img = Image.objects.get(name="dutch")
-        ctx = {
-            'form': form,
-            'image': img,
-            'total': 12,
-        }
-
-        return render(request, "main/dutch_order.html", ctx)
-
-
-
-class DutchOrderView2(FormView):
+class DutchOrderView(FormView):
     template_name = "main/dutch_order.html"
     form_class = DutchOrderForm
 
