@@ -41,7 +41,7 @@ class MainImage(models.Model):
 class User(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True)
     phone_regex = RegexValidator(
-                        regex="r^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$")
+                        regex="r^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$")
     phone_number = models.CharField(max_length=13, validators = ['phone_regex'],
                         null=False, blank=True)
 

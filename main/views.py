@@ -22,6 +22,8 @@ from .models import DutchOrder
 from .models import Image
 from .models import MainImage
 
+from twilio.rest import TwilioRestClient
+
 
 def home(request):
     greeting = "커피를 사랑하는 리얼듀 커피에 오신것을 환영합니다."
@@ -104,7 +106,7 @@ def location(request):
 #     connection.close()
 
 
-def _get_pin(length=5):
+def _get_pin(length=4):
     return random.sample((range(10**(length-1), 10**length), 1)[0])
 
 
@@ -114,8 +116,8 @@ def _verify_pin(phone_num, pin):
 
 def ajax_send_pin(request):
     """ Sends SMS PIN to the specified number """
-    mobile_number = request.POST.get('mobile_number', "")
-    if not mobile_number:
+    phone_num = request.POST.get('phone_num', "")
+    if not phone_num:
         return HttpResponse("No mobile number", mimetype='text/plain', status=403)
 
     pin = _get_pin()
@@ -125,7 +127,7 @@ def ajax_send_pin(request):
     client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     message = client.messages.create(
                         body="%s" % pin,
-                        to=mobile_number,
+                        to=phone_num,
                         from_=settings.TWILIO_FROM_NUMBER,
                     )
     return HttpResponse("Message %s sent" % message.sid, mimetype='text/plain', status=200)
@@ -143,26 +145,22 @@ class DutchOrderView(FormView):
         order = form.save(commit=False)
         pin = int(self.request.POST.get("pin","0"))
         phone_num = form.cleaned_data.get('phone_regex')
+        verify = self.request.POST.get("verify_phone", "")
+        if not verify:
+            return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
 
         if _verify_pin(phone_num, pin):
-            form.save()
-            return redirect('transaction_complete')
+            form.save(commit=False)
         else:
-            messages.error(request, "Invalid PIN!")
+            messages.error(self.request, "Invalid PIN!")
+            return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
 
-        # if phone_num == "010-1234-5678":
-        #     form._errors["phone_num"] = ["번호를 확인하세요."]
-        #     del form.cleaned_data["phone_regex"]
-        #     messages.error(request, "연락처를 확인하세요.")
-        #     return redirect('dutch_order')
         user, _ = User.objects.get_or_create(phone_number=phone_num)
         reserve_date = form.cleaned_data.get("seperate_date")
         reserve_time = form.cleaned_data.get("seperate_time")
         quantity = form.cleaned_data.get("quantity")
-        email = form.cleaned_data.get("email")
 
         order.quantity = quantity
-        order.email = email
         order.reserve_at = datetime(reserve_date.year, reserve_date.month, reserve_date.day, reserve_time.hour, reserve_time.minute, 0 , tzinfo=timezone.get_current_timezone())
         # order.reserve_at = datetime.combine(reserve_date, reserve_time, tzinfo=timezone.get_current_timezone())
         order.user = user

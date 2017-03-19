@@ -41,20 +41,6 @@ $('#id_quantity').change(function(){
     })
 });
 
-function send_pin() {
-    $.ajax({
-                url: "{% url 'ajax_send_pin' %}",
-                type: "POST",
-                data: { phone_num:  $("#id_phone_regex").val() },
-            })
-            .done(function(data) {
-                alert("PIN sent via SMS!");
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                alert(errorThrown + ' : ' + jqXHR.responseText);
-            });
-}
-
 
 $('#id_phone_regex').each(function(){
     var defaultval = "010-1234-5678";
@@ -82,12 +68,39 @@ $(function() {
         if($("#id_phone_regex").val() == "010-1234-5678"){
             $("#id_phone_regex").val("");
         }
-        if($("#id_email").val() == "someone@example.com"){
-            $("#id_email").val("");
-        }
     });
 });
 
+
+// function send_pin() {
+//     $.ajax({
+//         url: "{% url 'ajax_send_pin' %}",
+//         type: "POST",
+//         data: { phone_num:  "+82" + $("#id_phone_regex").val() },
+//     })
+//     .done(function(data) {
+//         alert("PIN sent via SMS!");
+//         $("#verify_phone").val("True")
+//     })
+//     .fail(function(jqXHR, textStatus, errorThrown) {
+//         alert(errorThrown + ' : ' + jqXHR.responseText);
+//     });
+// }
+
+$('#get-pin').click(function(){
+    $.ajax({
+        url: "{% url 'ajax_send_pin' %}",
+        type: "POST",
+        data: { phone_num:  $("#id_phone_regex").val() },
+    })
+    .done(function(data) {
+        alert("PIN sent via SMS!");
+        $("#verify_phone").val("True")
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+        alert(errorThrown + ' : ' + jqXHR.responseText);
+    });
+});
 
 
 {% endblock %}
@@ -107,8 +120,8 @@ $(function() {
         <h4 class='text-right'>가격: ￦<span id="total" class="total">{{ total }}</span>,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}
-            <input type="hidden" id="have_verify_phone" name="verify" required>
-            <p class="text-right"><button class="btn btn-danger" type="button" onClick="send_pin()"><i class="icon-share"></i> Get PIN</button>
+            <input type="hidden" id="verify_phone" name="verify" required>
+            <p class="text-right"><button id="get-pin" class="btn btn-danger" type="button"><i class="icon-share"></i> Get PIN</button>
                 <input id="reserve" class='btn btn-primary' type='submit' value='예약' />
             </p>
         </form>
