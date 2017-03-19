@@ -8,6 +8,7 @@ from django.contrib import admin
 from main import views as main_views
 from main.views import location
 from main.views import DutchOrderView
+from main.views import ajax_send_pin
 
 
 
@@ -17,10 +18,7 @@ urlpatterns = [
     url(r'^menu/', include('menu.urls')),
     url(r'^location/$', location, name='location'),
     url(r'^order/$', DutchOrderView.as_view(), name='dutch_order'),
-    # fixme need to add About Us
-    # url(r'^login/$', auth_views.login, name='login'),
-    # url(r'^logout/$', auth_views.logout, name='logout'),
-    # url(r'^oauth/', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^oder/verify/$', ajax_send_pin, name='ajax_send_pin'),
     url(r'^admin/', admin.site.urls),
 ]
 

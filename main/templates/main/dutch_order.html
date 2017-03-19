@@ -41,32 +41,19 @@ $('#id_quantity').change(function(){
     })
 });
 
-
-
-
-
-// function mysetdefault(clickID, val){
-//     function setdefault(){
-//         var defaultval = val;
-//         $(clickID).value = defaultval;
-//         $(clickID).addClass("text-label");
-//
-//         $(clickID).focus(function(){
-//             if($(clickID).value == defaultval){
-//                 $(clickID).value = '';
-//                 $(clickID).removeClass('text-label');
-//             }
-//         });
-//         $(clickID).blur(function(){
-//             if($(clickID).value == ''){
-//                 $(clickID).value = defaultval;
-//                 $(clickID).addClass("text-label");
-//             }
-//         });
-//     };
-//     $('#id_phone_regex').each(function(){setdefault();});
-// }
-
+function send_pin() {
+    $.ajax({
+                url: "{% url 'ajax_send_pin' %}",
+                type: "POST",
+                data: { phone_num:  $("#id_phone_regex").val() },
+            })
+            .done(function(data) {
+                alert("PIN sent via SMS!");
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                alert(errorThrown + ' : ' + jqXHR.responseText);
+            });
+}
 
 
 $('#id_phone_regex').each(function(){
@@ -89,25 +76,6 @@ $('#id_phone_regex').each(function(){
     });
 });
 
-$('#id_email').each(function(){
-    var defaultval = "someone@example.com";
-    this.value = defaultval;
-    $(this).addClass("text-label");
-
-
-    $(this).focus(function(){
-        if(this.value == defaultval){
-            this.value = '';
-            $(this).removeClass('text-label');
-        }
-    });
-    $(this).blur(function(){
-        if(this.value == ''){
-            this.value = defaultval;
-            $(this).addClass("text-label");
-        }
-    });
-});
 
 $(function() {
     $("#reserve").click(function(){
@@ -132,14 +100,17 @@ $(function() {
     <hr/>
     <br/>
     <div class='col-sm-8'>
-        <img class='img-responsive' style="height:600px"src="{{ image.image.url }}" />
+        <img class='img-responsive' style="height:600px" src="{{ image.image.url }}" />
     </div>
     <div class='col-sm-4'>
         <h3 class='text-center'>매일 새로 만드는 DutchCoffee</h3>
         <h4 class='text-right'>가격: ￦<span id="total" class="total">{{ total }}</span>,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}
-            <p class="text-right"><input id="reserve" class='btn' type='submit' value='예약' /></p>
+            <input type="hidden" id="have_verify_phone" name="verify" required>
+            <p class="text-right"><button class="btn btn-danger" type="button" onClick="send_pin()"><i class="icon-share"></i> Get PIN</button>
+                <input id="reserve" class='btn btn-primary' type='submit' value='예약' />
+            </p>
         </form>
     </div>
 </div>

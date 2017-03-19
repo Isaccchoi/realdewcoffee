@@ -104,6 +104,35 @@ def location(request):
 #     connection.close()
 
 
+def _get_pin(length=5):
+    return random.sample((range(10**(length-1), 10**length), 1)[0])
+
+
+def _verify_pin(phone_num, pin):
+    return pin == cache.get(mobile_number)
+
+
+def ajax_send_pin(request):
+    """ Sends SMS PIN to the specified number """
+    mobile_number = request.POST.get('mobile_number', "")
+    if not mobile_number:
+        return HttpResponse("No mobile number", mimetype='text/plain', status=403)
+
+    pin = _get_pin()
+
+    cache.set(mobile_number, pin, 24*3600)
+
+    client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    message = client.messages.create(
+                        body="%s" % pin,
+                        to=mobile_number,
+                        from_=settings.TWILIO_FROM_NUMBER,
+                    )
+    return HttpResponse("Message %s sent" % message.sid, mimetype='text/plain', status=200)
+
+
+
+
 
 class DutchOrderView(FormView):
     template_name = "main/dutch_order.html"
@@ -112,7 +141,15 @@ class DutchOrderView(FormView):
 
     def form_valid(self, form, *args, **kwargs):
         order = form.save(commit=False)
+        pin = int(self.request.POST.get("pin","0"))
         phone_num = form.cleaned_data.get('phone_regex')
+
+        if _verify_pin(phone_num, pin):
+            form.save()
+            return redirect('transaction_complete')
+        else:
+            messages.error(request, "Invalid PIN!")
+
         # if phone_num == "010-1234-5678":
         #     form._errors["phone_num"] = ["번호를 확인하세요."]
         #     del form.cleaned_data["phone_regex"]

@@ -29,14 +29,6 @@ def validate_phone_regex(value):
 
 
 class DutchOrderForm(forms.ModelForm):
-    phone_regex = forms.RegexField(label="휴대폰 번호",
-                    regex="^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$",
-                    # initial="010-1234-5678",
-                    error_messages={
-                        'invalid': ("010-1234-5678 형식으로 12자리를 입력하세요.")
-                    },
-                    validators = [validate_phone_regex],
-                    )
     seperate_time = forms.TimeField(label="예약 시간", input_formats=["%H:%M"],
                                     initial=default_time().strftime("%H:%M"),
                                     widget=forms.TimeInput(attrs={'class': 'time-input'}))
@@ -45,12 +37,26 @@ class DutchOrderForm(forms.ModelForm):
                                     initial=default_time().strftime("%Y-%m-%d"),
                                     widget=forms.DateInput(attrs={'class': 'date-input'}))
 
+    phone_regex = forms.RegexField(label="휴대폰 번호",
+                    regex="^01([0|1|6|7|8|9]?)-([0-9]{3,4})-([0-9]{4})$",
+                    # initial="010-1234-5678",
+                    error_messages={
+                        'invalid': ("010-1234-5678 형식으로 12자리를 입력하세요.")
+                        },
+                    validators = [validate_phone_regex],
+                    )
+    pin = forms.IntegerField(label="PIN",
+                    error_messages={
+                        'invalid': ("PIN이 일치하지 않습니다."),
+                        },
+                    required=True,
+                    )
+
     class Meta:
         model = DutchOrder
-        fields = ('quantity', 'email',)
+        fields = ('quantity',)
         labels = {
             'quantity': _('수량'),
-            'email':_('이메일'),
             }
 
     # def clean_phone_regex(self):
