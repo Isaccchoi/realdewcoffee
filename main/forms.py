@@ -22,7 +22,7 @@ def default_time():
 
 
 def validate_phone_regex(value):
-    if value == "010-1234-5678":
+    if value == "01012345678":
         raise forms.ValidationError('전화번호를 확인하세요.')
 
 
@@ -38,11 +38,12 @@ class DutchOrderForm(forms.ModelForm):
                                     widget=forms.DateInput(attrs={'class': 'date-input'}))
 
     phone_regex = forms.RegexField(label="휴대폰 번호",
-                    regex="^01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})$",
+                    regex="^01([0|1|6|7|8|9]?)([0-9]{7,8})$",
                     # initial="010-1234-5678",
                     error_messages={
-                        'invalid': ("010-1234-5678 형식으로 12자리를 입력하세요.")
+                        'invalid': ("01012345678 형식으로 10~11자리를 입력하세요.")
                         },
+                    help_text="01012345678 형식으로 작성하세요.",
                     validators = [validate_phone_regex],
                     )
     pin = forms.IntegerField(label="PIN",

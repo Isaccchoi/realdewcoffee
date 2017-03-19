@@ -1,10 +1,14 @@
+import random
+
 from django import forms
 from django.contrib import messages
 from django.conf import settings
 from django.core import mail
+from django.core.cache import cache
 
 from django.http import Http404
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.generic.base import View
@@ -106,31 +110,30 @@ def location(request):
 #     connection.close()
 
 
-def _get_pin(length=4):
-    return random.sample((range(10**(length-1), 10**length), 1)[0])
+def _get_pin(length=5):
+    return random.sample((range(10**(length-1), 10**length), 1)[0], 1)
 
 
 def _verify_pin(phone_num, pin):
-    return pin == cache.get(mobile_number)
-
+    return pin == cache.get(phone_num)
 
 def ajax_send_pin(request):
     """ Sends SMS PIN to the specified number """
     phone_num = request.POST.get('phone_num', "")
     if not phone_num:
-        return HttpResponse("No mobile number", mimetype='text/plain', status=403)
+        return HttpResponse("No mobile number", content_type='text/plain', status=403)
 
     pin = _get_pin()
 
-    cache.set(mobile_number, pin, 24*3600)
+    cache.set(phone_num, pin, 24*3600)
 
     client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     message = client.messages.create(
                         body="%s" % pin,
-                        to=phone_num,
+                        to="+82%s" %phone_num,
                         from_=settings.TWILIO_FROM_NUMBER,
                     )
-    return HttpResponse("Message %s sent" % message.sid, mimetype='text/plain', status=200)
+    return HttpResponse("Message %s sent" % message.sid, content_type='text/plain', status=200)
 
 
 
@@ -149,9 +152,9 @@ class DutchOrderView(FormView):
         if not verify:
             return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
 
-        if _verify_pin(phone_num, pin):
-            form.save(commit=False)
-        else:
+        # if _verify_pin(phone_num, pin):
+        #     form.save(commit=False)
+        if not _verify_pin(phone_num, pin):
             messages.error(self.request, "Invalid PIN!")
             return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
 
