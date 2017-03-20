@@ -45,8 +45,9 @@ class DutchOrderForm(forms.ModelForm):
                         },
                     help_text="01012345678 형식으로 작성하세요.",
                     validators = [validate_phone_regex],
+                    widget=forms.TextInput(attrs={'placeholder':'01012345678'})
                     )
-    pin = forms.IntegerField(label="PIN",
+    pin = forms.CharField(label="PIN",
                     error_messages={
                         'invalid': ("PIN이 일치하지 않습니다."),
                         },

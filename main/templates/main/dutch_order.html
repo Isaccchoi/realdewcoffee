@@ -42,25 +42,25 @@ $('#id_quantity').change(function(){
 });
 
 
-$('#id_phone_regex').each(function(){
-    var defaultval = "01012345678";
-    this.value = defaultval;
-    $(this).addClass("text-label");
-
-
-    $(this).focus(function(){
-        if(this.value == defaultval){
-            this.value = '';
-            $(this).removeClass('text-label');
-        }
-    });
-    $(this).blur(function(){
-        if(this.value == ''){
-            this.value = defaultval;
-            $(this).addClass("text-label");
-        }
-    });
-});
+// $('#id_phone_regex').each(function(){
+//     var defaultval = "01012345678";
+//     this.value = defaultval;
+//     $(this).addClass("text-label");
+//
+//
+//     $(this).focus(function(){
+//         if(this.value == defaultval){
+//             this.value = '';
+//             $(this).removeClass('text-label');
+//         }
+//     });
+//     $(this).blur(function(){
+//         if(this.value == ''){
+//             this.value = defaultval;
+//             $(this).addClass("text-label");
+//         }
+//     });
+// });
 
 
 $(function() {
@@ -88,21 +88,28 @@ $(function() {
 // }
 
 $('#get-pin').click(function(){
-    $.ajax({
-        url: "{% url 'ajax_send_pin' %}",
-        type: "POST",
-        data: {
-            phone_num:  $("#id_phone_regex").val(),
-            'csrfmiddlewaretoken': '{{csrf_token}}'
-        },
-        success: function(data){
-            alert("PIN sent via SMS!");
-        },
-        error: function(response, error){
-			console.log(response);
-		    // console.log(error);
-		}
-    })
+    if($("#id_phone_regex").val() == "01012345678"){
+        $("#id_phone_regex").val("");
+    }else if($.isNumeric($("id_phone_regex").val())){
+        $.ajax({
+            url: "{% url 'ajax_send_pin' %}",
+            type: "POST",
+            data: {
+                phone_num:  $("#id_phone_regex").val(),
+                'csrfmiddlewaretoken': '{{csrf_token}}'
+            },
+            success: function(data){
+                alert("PIN 번호가 발송되었습니다.");
+                $('#reserve').removeClass('hide');
+            },
+            error: function(response, error){
+    			console.log(response);
+    		    // console.log(error);
+    		}
+        })
+    }else {
+        alert("휴대폰 번호는 01012345678형식의 숫자로 작성하여야 합니다.")
+    };
     // })
     // .done(function(data) {
     //     alert("PIN sent via SMS!");
@@ -111,6 +118,7 @@ $('#get-pin').click(function(){
     //     alert(errorThrown + ' : ' + jqXHR.responseText);
     // });
 });
+
 
 
 {% endblock %}
@@ -123,15 +131,15 @@ $('#get-pin').click(function(){
     <hr/>
     <br/>
     <div class='col-sm-8'>
-        <img class='img-responsive' style="height:600px" src="{{ image.image.url }}" />
+        <img class='img-responsive' style="height:600px; margin:0 auto;" src="{{ image.image.url }}" />
     </div>
     <div class='col-sm-4'>
         <h3 class='text-center'>매일 새로 만드는 DutchCoffee</h3>
         <h4 class='text-right'>가격: ￦<span id="total" class="total">{{ total }}</span>,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}
-            <p class="text-right"><button id="get-pin" class="btn btn-danger" type="button"><i class="icon-share"></i> Get PIN</button>
-                <input id="reserve" class='btn btn-primary' type='submit' value='예약' />
+            <p class="text-right"><button id="get-pin" class="btn btn-danger" type="button"><i class="icon-share"></i>PIN 받기</button>
+                <input id="reserve" class='hide btn btn-primary' type='submit' value='예약' />
             </p>
         </form>
     </div>

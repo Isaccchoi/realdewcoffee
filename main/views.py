@@ -115,7 +115,7 @@ def _get_pin(length=5):
 
 
 def _verify_pin(phone_num, pin):
-    return pin == cache.get(phone_num)
+    return pin == cache.get(phone_num)[0]
 
 def ajax_send_pin(request):
     """ Sends SMS PIN to the specified number """
@@ -129,11 +129,11 @@ def ajax_send_pin(request):
 
     client = TwilioRestClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     message = client.messages.create(
-                        body="%s" % pin,
+                        body="리얼듀 커피 인증 번호 %s" % pin,
                         to="+82%s" %phone_num,
                         from_=settings.TWILIO_FROM_NUMBER,
                     )
-    return HttpResponse("Message %s sent" % message.sid, content_type='text/plain', status=200)
+    return HttpResponse(u"문자를 발송했습니다.", content_type='text/plain', status=200)
 
 
 
@@ -143,20 +143,29 @@ class DutchOrderView(FormView):
     template_name = "main/dutch_order.html"
     form_class = DutchOrderForm
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(DutchOrderView, self).get_context_data(*args, **kwargs)
+        context.update({
+            "form": DutchOrderForm,
+            "image":Image.objects.get(name="dutch"),
+            "total":12,
+        })
+        return context
+
 
     def form_valid(self, form, *args, **kwargs):
         order = form.save(commit=False)
-        pin = int(self.request.POST.get("pin","0"))
+        pin = form.cleaned_data.get('pin')
         phone_num = form.cleaned_data.get('phone_regex')
-        verify = self.request.POST.get("verify_phone", "")
-        if not verify:
-            return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
+        # verify = self.request.POST.get("verify_phone", "")
+        # if not verify:
+        #     return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
 
-        # if _verify_pin(phone_num, pin):
-        #     form.save(commit=False)
+        if _verify_pin(phone_num, pin):
+            form.save(commit=False)
         if not _verify_pin(phone_num, pin):
-            messages.error(self.request, "Invalid PIN!")
-            return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
+            messages.error(self.request, "PIN이 잘못되었습니다.")
+            return self.render_to_response(self.get_context_data())
 
         user, _ = User.objects.get_or_create(phone_number=phone_num)
         reserve_date = form.cleaned_data.get("seperate_date")
@@ -176,11 +185,8 @@ class DutchOrderView(FormView):
 
 
     def form_invalid(self, form, *args, **kwargs):
-        ctx = self.get_context_data(**kwargs)
-        ctx["form"] = form
-        ctx["image"] = Image.objects.get(name="dutch")
-        ctx["total"] = 12
-        return self.render_to_response(ctx)
+        messages.error(self.request, "잘못 입력하셨습니다.")
+        return self.render_to_response(self.get_context_data())
 
 
     def get_success_url(self, *args, **kwargs):
