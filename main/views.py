@@ -115,6 +115,8 @@ def _get_pin(length=5):
 
 
 def _verify_pin(phone_num, pin):
+    print(pin)
+    print(cache.get(phone_num)[0])
     return pin == cache.get(phone_num)[0]
 
 def ajax_send_pin(request):
@@ -156,14 +158,22 @@ class DutchOrderView(FormView):
     def form_valid(self, form, *args, **kwargs):
         order = form.save(commit=False)
         pin = form.cleaned_data.get('pin')
+        try:
+            pin = int(pin)
+        except:
+            messages.error(self.request, "PIN이 잘못되었습니다.")
+            return self.render_to_response(self.get_context_data())
+            
         phone_num = form.cleaned_data.get('phone_regex')
+        print(phone_num)
+        print(pin)
         # verify = self.request.POST.get("verify_phone", "")
         # if not verify:
         #     return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
 
         if _verify_pin(phone_num, pin):
             form.save(commit=False)
-        if not _verify_pin(phone_num, pin):
+        else:
             messages.error(self.request, "PIN이 잘못되었습니다.")
             return self.render_to_response(self.get_context_data())
 
