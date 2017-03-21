@@ -29,7 +29,7 @@ $('#id_quantity').change(function(){
     console.log(data);
     $.ajax({
         type: "GET", //"POST"
-        url: "{% url 'dutch_order' %}",
+        url: "{% url 'dutch' %}",
         data: data,
         success: function(data){
             $("#total").text(data.total);

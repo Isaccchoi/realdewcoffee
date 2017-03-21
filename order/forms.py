@@ -60,21 +60,4 @@ class DutchOrderForm(forms.ModelForm):
         labels = {
             'quantity': _('수량'),
             }
-
-    # def clean_phone_regex(self):
-    #     phone_regex = self.cleaned_data['phone_regex']
-    #     if phone_regex == "010-1234-5678":
-    #         raise forms.ValidationError("올바른 번호를 입력하세요.")
-    #     return phone_regex
-    # # def clean(self):
-    #     cleaned_data = super(DutchOrderForm, self).clean()
-    #     reserve_date = cleaned_data['seperate_date']
-    #     reserve_time = cleaned_data['seperate_time']
-    #
-    #     self.cleaned_data['reserve_at'] = datetime.combine(reserve_date, reserve_time)
-    #
-    #     # self.cleaned_data['reserve_at'] = \
-    #     #                 datetime.combine(self.cleaned_data.get('seperate_date', None),
-    #     #                                     self.cleaned_data.get('seperate_time',None))
-    #     if self.cleaned_data['reserve_at'] < default_time:
-    #         raise ValidationError("예약 가능 시간이 아닙니다. %s 이후로 예약해주세요") %(default_time)
+            
