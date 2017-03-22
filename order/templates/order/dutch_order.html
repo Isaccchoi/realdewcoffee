@@ -16,9 +16,8 @@ $('.date-input').datepicker({
     // 'minDate': moment().add('d',1).toDate(),
     'autoclose': true
 });
-// function numberWithCommas(x) {
-//   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-// };
+
+
 $('#id_quantity').change(function(){
     var qty = $("#id_quantity").val()
     var total = $("#total").val()
@@ -41,51 +40,6 @@ $('#id_quantity').change(function(){
     })
 });
 
-
-// $('#id_phone_regex').each(function(){
-//     var defaultval = "01012345678";
-//     this.value = defaultval;
-//     $(this).addClass("text-label");
-//
-//
-//     $(this).focus(function(){
-//         if(this.value == defaultval){
-//             this.value = '';
-//             $(this).removeClass('text-label');
-//         }
-//     });
-//     $(this).blur(function(){
-//         if(this.value == ''){
-//             this.value = defaultval;
-//             $(this).addClass("text-label");
-//         }
-//     });
-// });
-
-
-// $(function() {
-//     $("#reserve").click(function(){
-//         if($("#id_phone_regex").val() == "01012345678"){
-//             $("#id_phone_regex").val("");
-//         }
-//     });
-// });
-
-
-// function send_pin() {
-//     $.ajax({
-//         url: "{% url 'ajax_send_pin' %}",
-//         type: "POST",
-//         data: { phone_num:  "+82" + $("#id_phone_regex").val() },
-//     })
-//     .done(function(data) {
-//         alert("PIN sent via SMS!");
-//         $("#verify_phone").val("True")
-//     })
-//     .fail(function(jqXHR, textStatus, errorThrown) {
-//         alert(errorThrown + ' : ' + jqXHR.responseText);
-//     });
-// }
 
 $('#get-pin').click(function(){
     if($("#id_phone_regex").val() == ""){
@@ -110,31 +64,21 @@ $('#get-pin').click(function(){
     }else {
         alert("휴대폰 번호는 01012345678형식의 숫자로 작성하여야 합니다.")
     };
-    // })
-    // .done(function(data) {
-    //     alert("PIN sent via SMS!");
-    // })
-    // .fail(function(jqXHR, textStatus, errorThrown) {
-    //     alert(errorThrown + ' : ' + jqXHR.responseText);
-    // });
 });
-
-
-
 {% endblock %}
 </script>
 
 
 {% block content %}
 <div class='row' style="margin-bottom: 30px">
-    <h1 class="text-center">Dutch Coffee 예약</h1>
+    <h1 class="text-center">{{ title }} 예약</h1>
     <hr/>
     <br/>
     <div class='col-sm-8'>
         <img class='img-responsive' style="height:600px; margin:0 auto;" src="{{ image.image.url }}" />
     </div>
     <div class='col-sm-4'>
-        <h3 class='text-center'>매일 새로 만드는 DutchCoffee</h3>
+        <h3 class='text-center'>매일 새로 만드는 {{ title }}</h3>
         <h4 class='text-right'>가격: ￦<span id="total" class="total">{{ total }}</span>,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}

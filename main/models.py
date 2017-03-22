@@ -55,19 +55,3 @@ def default_time():
     open = now.replace(hour=9, minute=0, second=0, microsecond=0,
                             tzinfo=timezone.get_current_timezone())
     return open if open >= now else open + timedelta(days=1)
-
-
-
-# class DutchOrder(models.Model):
-#     user = models.ForeignKey(User)
-#     quantity = models.PositiveSmallIntegerField(null=False, blank=False, default=1)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     reserve_at = models.DateTimeField(null=False, blank=True)
-#     total_charge = models.PositiveIntegerField(null=False, blank=False)
-#     email = models.EmailField(null=True, blank=False)
-#
-#     def __str__(self):
-#         return self.user.phone_number
-#
-#     class Meta:
-#         ordering = ['-created_at', '-id']
