@@ -6,9 +6,6 @@ from django.utils import timezone
 
 # Create your views here.
 
-# from .forms import DutchOrderForm
-
-# from .models import DutchOrder
 from .models import MainImage
 
 

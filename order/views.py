@@ -52,6 +52,7 @@ def ajax_send_pin(request):
     return HttpResponse(u"문자를 발송했습니다.", content_type='text/plain', status=200)
 
 
+
 class DutchOrderView(FormView):
     template_name = "order/dutch_order.html"
     form_class = DutchOrderForm
@@ -77,11 +78,6 @@ class DutchOrderView(FormView):
             return self.render_to_response(self.get_context_data())
 
         phone_num = form.cleaned_data.get('phone_regex')
-        print(phone_num)
-        print(pin)
-        # verify = self.request.POST.get("verify_phone", "")
-        # if not verify:
-        #     return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
 
         if _verify_pin(phone_num, pin):
             form.save(commit=False)
@@ -96,7 +92,6 @@ class DutchOrderView(FormView):
 
         order.quantity = quantity
         order.reserve_at = datetime(reserve_date.year, reserve_date.month, reserve_date.day, reserve_time.hour, reserve_time.minute, 0 , tzinfo=timezone.get_current_timezone())
-        # order.reserve_at = datetime.combine(reserve_date, reserve_time, tzinfo=timezone.get_current_timezone())
         order.user = user
         order.total_charge = order.quantity * 12000
         order.save()
@@ -164,17 +159,13 @@ class SeogyoOrderView(FormView):
             return self.render_to_response(self.get_context_data())
 
         phone_num = form.cleaned_data.get('phone_regex')
-        print(phone_num)
-        print(pin)
-        # verify = self.request.POST.get("verify_phone", "")
-        # if not verify:
-        #     return super(DutchOrderView, self).form_invalid(form, *args, **kwargs)
 
         if _verify_pin(phone_num, pin):
             form.save(commit=False)
         else:
             messages.error(self.request, "PIN이 잘못되었습니다.")
             return self.render_to_response(self.get_context_data())
+
 
         user, _ = User.objects.get_or_create(phone_number=phone_num)
         reserve_date = form.cleaned_data.get("seperate_date")
