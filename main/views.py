@@ -35,7 +35,7 @@ def home(request):
 
 
 def aboutus(request):
-    title = "About Us"
+    title = "About us"
     image = MainImage.objects.filter(active=True).filter(location="main")
     # left = MainImage.objects.filter(active=True).get(location="left")
     # right = MainImage.objects.filter(active=True).get(location="right")

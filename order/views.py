@@ -60,7 +60,7 @@ class DutchOrderView(FormView):
     def get_context_data(self, *args, **kwargs):
         context = super(DutchOrderView, self).get_context_data(*args, **kwargs)
         context.update({
-            "title": "Dutch Coffee",
+            "title": "더치 커피",
             "form": DutchOrderForm,
             "image":Image.objects.get(name="dutch"),
             "total":12,
@@ -125,7 +125,7 @@ class DutchOrderView(FormView):
         form = DutchOrderForm
         img = Image.objects.get(name="dutch")
         ctx = {
-            'title': "Dutch Coffee",
+            'title': "더치 커피",
             'form': form,
             'image': img,
             'total': 12,
@@ -141,7 +141,7 @@ class SeogyoOrderView(FormView):
     def get_context_data(self, *args, **kwargs):
         context = super(SeogyoOrderView, self).get_context_data(*args, **kwargs)
         context.update({
-            "title": "서교동 커피",
+            "title": "서교동 라떼",
             "form": DutchOrderForm,
             "image":Image.objects.get(name="dutch"),
             "total":12,
@@ -208,7 +208,7 @@ class SeogyoOrderView(FormView):
         form = DutchOrderForm
         img = Image.objects.get(name="dutch")
         ctx = {
-            "title": "서교동 커피",
+            "title": "서교동 라떼",
             "form": form,
             "image": img,
             "total": 4,

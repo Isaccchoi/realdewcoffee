@@ -1,5 +1,5 @@
 RealDew Coffee Website
 
 
-beta
+beta 0.2ver
 http://isaccchoi.pythonanywhere.com/
