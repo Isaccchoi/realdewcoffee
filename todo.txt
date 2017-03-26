@@ -1,4 +1,5 @@
-1. checking order
+1. add checking my order view
 2. packaging order/views
+
 3. add real images
 4. change description in about us

@@ -5,8 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
 from datetime import timedelta
 
-from .models import DutchOrder
-from .models import SeogyodongOrder
+from .models import Order
+# from .models import SeogyodongOrder
 
 
 def default_time():
@@ -29,7 +29,7 @@ def validate_phone_regex(value):
 
 
 
-class DutchOrderForm(forms.ModelForm):
+class OrderForm(forms.ModelForm):
     seperate_time = forms.TimeField(label="예약 시간", input_formats=["%H:%M"],
                                     initial=default_time().strftime("%H:%M"),
                                     widget=forms.TimeInput(attrs={'class': 'time-input'}))
@@ -56,43 +56,43 @@ class DutchOrderForm(forms.ModelForm):
                     )
 
     class Meta:
-        model = DutchOrder
+        model = Order
         fields = ('quantity',)
         labels = {
             'quantity': _('수량'),
             }
 
-
-
-class SeogyoOrderForm(forms.ModelForm):
-    seperate_time = forms.TimeField(label="예약 시간", input_formats=["%H:%M"],
-                                    initial=default_time().strftime("%H:%M"),
-                                    widget=forms.TimeInput(attrs={'class': 'time-input'}))
-    seperate_date = forms.DateField(label="예약 날짜", input_formats=["%Y-%m-%d"],
-                                    help_text="새로 추출을 하기 때문에 24시간 이후로 잡으시는 것을 추천드립니다.",
-                                    initial=default_time().strftime("%Y-%m-%d"),
-                                    widget=forms.DateInput(attrs={'class': 'date-input'}))
-
-    phone_regex = forms.RegexField(label="휴대폰 번호",
-                    regex="^01([0|1|6|7|8|9]?)([0-9]{7,8})$",
-                    # initial="010-1234-5678",
-                    error_messages={
-                        'invalid': ("01012345678 형식으로 10~11자리를 입력하세요.")
-                        },
-                    help_text="01012345678 형식으로 작성하세요.",
-                    validators = [validate_phone_regex],
-                    widget=forms.TextInput(attrs={'placeholder':'01012345678'})
-                    )
-    pin = forms.CharField(label="PIN",
-                    error_messages={
-                        'invalid': ("PIN이 일치하지 않습니다."),
-                        },
-                    required=True,
-                    )
-
-    class Meta:
-        model = SeogyodongOrder
-        fields = ('quantity',)
-        labels = {
-            'quantity': _('수량'),
-            }
+#
+#
+# class SeogyoOrderForm(forms.ModelForm):
+#     seperate_time = forms.TimeField(label="예약 시간", input_formats=["%H:%M"],
+#                                     initial=default_time().strftime("%H:%M"),
+#                                     widget=forms.TimeInput(attrs={'class': 'time-input'}))
+#     seperate_date = forms.DateField(label="예약 날짜", input_formats=["%Y-%m-%d"],
+#                                     help_text="새로 추출을 하기 때문에 24시간 이후로 잡으시는 것을 추천드립니다.",
+#                                     initial=default_time().strftime("%Y-%m-%d"),
+#                                     widget=forms.DateInput(attrs={'class': 'date-input'}))
+#
+#     phone_regex = forms.RegexField(label="휴대폰 번호",
+#                     regex="^01([0|1|6|7|8|9]?)([0-9]{7,8})$",
+#                     # initial="010-1234-5678",
+#                     error_messages={
+#                         'invalid': ("01012345678 형식으로 10~11자리를 입력하세요.")
+#                         },
+#                     help_text="01012345678 형식으로 작성하세요.",
+#                     validators = [validate_phone_regex],
+#                     widget=forms.TextInput(attrs={'placeholder':'01012345678'})
+#                     )
+#     pin = forms.CharField(label="PIN",
+#                     error_messages={
+#                         'invalid': ("PIN이 일치하지 않습니다."),
+#                         },
+#                     required=True,
+#                     )
+#
+#     class Meta:
+#         model = SeogyodongOrder
+#         fields = ('quantity',)
+#         labels = {
+#             'quantity': _('수량'),
+#             }

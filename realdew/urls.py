@@ -7,7 +7,7 @@ from django.contrib import admin
 
 from main import views as main_views
 from main.views import location
-from order.views import ajax_send_pin
+# from order.views import ajax_send_pin
 
 
 
@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'^menu/', include('menu.urls')),
     url(r'^order/', include('order.urls'), name='order'),
     url(r'^location/$', location, name='location'),
-    url(r'^oder/verify/$', ajax_send_pin, name='ajax_send_pin'),
+    # url(r'^oder/verify/$', ajax_send_pin, name='ajax_send_pin'),
     url(r'^admin/', admin.site.urls),
 ]
 

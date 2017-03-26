@@ -3,14 +3,14 @@
    <!-- Static navbar -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
-        <div class="navbar-header">
+        <div class="navbar-header" style="min-height:62px;">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" style="top:10px;">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand navbar-a-tag icon" href="{% url 'home' %}" style="font-size:25px; padding:0px; padding-top:5px;"><img style="width:60px; height:60px;" src="http://isaccchoi.pythonanywhere.com/media/images/2017/03/17/realdew_CqBjvJb.jpg" /></a>
+        <a class="navbar-brand navbar-a-tag icon" href="{% url 'home' %}" style="font-size:25px; padding:0px; padding-top:3px;"><img class="img-reponsive" style="max-width:60px; max-height:59px;" src="http://isaccchoi.pythonanywhere.com/media/images/2017/03/17/realdew_CqBjvJb.jpg" /></a>
         <a class="navbar-brand navbar-a-tag" href="{% url 'home' %}" style="font-size:30px; padding-top:30px;">리얼듀 커피</a>
           <!-- <a class="navbar-brand navbar-a-tag" href="{% url 'home' %}" style="font-size:22px;">리얼듀 커피</a><br/> -->
         </div>
@@ -23,8 +23,8 @@
               <li class="dropdown">
                   <a href="#" class="dropdown-toggle naver-a-tag" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 33px; background-color:black;" >Order<span class="caret"></span></a>
                   <ul class="dropdown-menu" style="background-color:black;">
-                    <li><a style="background-color:black; color:gray; font-size:18px;" href="{% url 'dutch' %}">더치 커피</a></li>
-                    <li><a style="background-color:black; color:gray; font-size:18px;" href="{% url 'seogyo' %}">서교동 라떼</a></li>
+                    <li><a style="background-color:black; color:gray; font-size:18px;" href="{% url 'reserve' bev='dutch' %}">더치 커피</a></li>
+                    <li><a style="background-color:black; color:gray; font-size:18px;" href="{% url 'reserve' bev='seogyo' %}">서교동 라떼</a></li>
                     <li role="separator" style="background-color:gray;" class="divider"></li>
                     <li><a style="background-color:black; color:gray; font-size:18px;" href="#">예약 확인</a></li>
                   </ul>

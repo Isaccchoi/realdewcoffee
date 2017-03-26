@@ -78,7 +78,7 @@ $('#get-pin').click(function(){
         <img class='img-responsive' style="height:600px; margin:0 auto;" src="{{ image.image.url }}" />
     </div>
     <div class='col-sm-4'>
-        <h3 class='text-center'>매일 새로 만드는 {{ title }}</h3>
+        <h3 class='text-center'>{{ title }}</h3>
         <h4 class='text-right'>가격: ￦<span id="total" class="total">{{ total }}</span>,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}
