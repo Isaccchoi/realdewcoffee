@@ -1,5 +1,5 @@
 1. add checking my order view
+        - reverse to checkview with session key for protection?
 2. packaging order/views
-
 3. add real images
 4. change description in about us

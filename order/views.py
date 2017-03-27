@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.cache import cache
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.http import Http404
@@ -181,7 +182,7 @@ class OrderView(FormView):
 
 
 class IdentifyView(FormView):
-    template_name = "order/check.html"
+    template_name = "order/identify.html"
     form_class = IdentifyForm
 
     def get_context_data(self, *args, **kwargs):
@@ -232,7 +233,7 @@ class IdentifyView(FormView):
             "form": form,
             "image":image,
         }
-        return render(request, "order/check.html",ctx)
+        return render(request, "order/identify.html",ctx)
 
 
 
@@ -240,6 +241,10 @@ class IdentifyView(FormView):
 class CheckOrderView(ListView):
 
     def get(self, request, *args, **kwargs):
+        return redirect("/home/")
+
+
+    def post(self, request, *args, **kwargs):
 
         ctx = {
             "form": "name",
