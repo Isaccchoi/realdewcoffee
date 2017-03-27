@@ -28,7 +28,7 @@ $('#id_quantity').change(function(){
     console.log(data);
     $.ajax({
         type: "GET", //"POST"
-        url: "{% url 'dutch' %}",
+        url: "{{ build_absolute_uri }}",
         data: data,
         success: function(data){
             $("#total").text(data.total);
@@ -75,7 +75,7 @@ $('#get-pin').click(function(){
     <hr/>
     <br/>
     <div class='col-sm-8'>
-        <img class='img-responsive' style="height:600px; margin:0 auto;" src="{{ image.image.url }}" />
+        <img class='img-responsive' style="max-height:600px; margin:0 auto;" src="{{ image.image.url }}" />
     </div>
     <div class='col-sm-4'>
         <h3 class='text-center'>{{ title }}</h3>

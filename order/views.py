@@ -4,18 +4,21 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.cache import cache
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.http import Http404
 from django.views.generic.edit import FormView
 from django.utils import timezone
+from django.urls import reverse
 
 from datetime import datetime
 
 # Create your views here.
 
 from main.models import Image
-from .models import User
+from main.models import User
+from .models import Beverage
 from .models import Order
 # from .models import SeogyodongOrder
 from .forms import OrderForm
@@ -29,8 +32,6 @@ def _get_pin(length=5):
 
 
 def _verify_pin(phone_num, pin):
-    print(pin)
-    print(cache.get(phone_num)[0])
     return pin == cache.get(phone_num)[0]
 
 
@@ -59,27 +60,33 @@ class OrderView(FormView):
     form_class = OrderForm
 
     def get_context_data(self, *args, **kwargs):
-        beverage = self.request.GET.get('bev')
+        beverage = kwargs.get('bev', None)
+        print(kwargs.get('bev', "none"))
 
         if beverage == "seogyo":
             price = 4
+            title = "서교동 라떼"
+            image = get_object_or_404(Image, name="seogyo")
         elif beverage == "dutch":
             price = 12
+            title = "더치 커피"
+            image = get_object_or_404(Image, name="dutch")
         else:
             raise Http404
-            
+
         context = super(DutchOrderView, self).get_context_data(*args, **kwargs)
         context.update({
-            "title": "더치 커피",
-            "form": DutchOrderForm,
-            "image": Image.objects.get(name="dutch"),
+            "title": title,
+            "form": OrderForm,
+            "image": image,
             "total": price,
         })
         return context
 
 
     def form_valid(self, form, *args, **kwargs):
-        beverage = self.request.GET.get('bev')
+        beverage = self.kwargs['bev']
+        
         order = form.save(commit=False)
         pin = form.cleaned_data.get('pin')
         try:
@@ -101,7 +108,9 @@ class OrderView(FormView):
         reserve_time = form.cleaned_data.get("seperate_time")
         quantity = form.cleaned_data.get("quantity")
 
-        order.beverage = beverage
+
+        order.beverage = get_object_or_404(Beverage, name=beverage)
+
         order.pin = pin
         order.quantity = quantity
         order.reserve_at = datetime(reserve_date.year, reserve_date.month, reserve_date.day, reserve_time.hour, reserve_time.minute, 0 , tzinfo=timezone.get_current_timezone())
@@ -113,12 +122,13 @@ class OrderView(FormView):
             price = 4
         else:
             raise Http404
-        order.total_charge = order.quantity * 12000
+
+        order.total_charge = order.quantity * order.beverage.get_price()
         order.save()
         messages.success(self.request, "%s월%s일 %s시 %s분으로 예약이 완료되었습니다."\
                             %(order.reserve_at.month, order.reserve_at.day,
                               order.reserve_at.hour, order.reserve_at.minute))
-        return super(DutchOrderView, self).form_valid(form, *args, **kwargs)
+        return super(OrderView, self).form_valid(form, *args, **kwargs)
 
 
     def form_invalid(self, form, *args, **kwargs):
@@ -127,15 +137,19 @@ class OrderView(FormView):
 
 
     def get_success_url(self, *args, **kwargs):
-        return "/home/"
+        return reverse('reserve', kwargs={"bev":self.kwargs['bev']})
 
     def get(self, request, *args, **kwargs):
-        beverage = self.request.GET.get('bev')
+        beverage = kwargs.get('bev', None)
 
         if beverage == "seogyo":
             price = 4
+            title = "서교동 라떼"
+            image = Beverage.objects.get(name="seogyo")
         elif beverage == "dutch":
             price = 12
+            title = "더치 커피"
+            image = Beverage.objects.get(name="dutch")
         else:
             raise Http404
 
@@ -150,16 +164,12 @@ class OrderView(FormView):
             }
             return JsonResponse(data)
 
-
-        form = DutchOrderForm
-        img = Image.objects.get(name="dutch")
-
-
+        form = OrderForm
 
         ctx = {
-            'title': "더치 커피",
+            'title': title,
             'form': form,
-            'image': img,
+            'image': image,
             'total': price,
         }
 
@@ -174,7 +184,7 @@ class OrderView(FormView):
 #         context = super(SeogyoOrderView, self).get_context_data(*args, **kwargs)
 #         context.update({
 #             "title": "서교동 라떼",
-#             "form": DutchOrderForm,
+#             "form": OrderForm,
 #             "image":Image.objects.get(name="dutch"),
 #             "total":12,
 #         })
@@ -237,7 +247,7 @@ class OrderView(FormView):
 #             return JsonResponse(data)
 #
 #
-#         form = DutchOrderForm
+#         form = OrderForm
 #         img = Image.objects.get(name="dutch")
 #         ctx = {
 #             "title": "서교동 라떼",

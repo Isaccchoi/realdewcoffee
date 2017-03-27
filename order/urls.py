@@ -10,7 +10,7 @@ from .views import ajax_send_pin
 
 
 urlpatterns = [
-    url(r'^(?P<bev>[a-z]+)/$', OrderView.as_view(), name='reserve'),
     # url(r'^seogyo/$', SeogyoOrderView.as_view(), name='seogyo'),
     url(r'^verify/$', ajax_send_pin, name='ajax_send_pin'),
+    url(r'^(?P<bev>[a-z]+)/$', OrderView.as_view(), name='reserve'),
 ]

@@ -7,12 +7,15 @@ from main.models import User
 
 
 class Beverage(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     price = models.PositiveSmallIntegerField()
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    def get_price(self):
+        return self.price
 
 
 
