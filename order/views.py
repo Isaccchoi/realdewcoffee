@@ -190,7 +190,7 @@ class IdentifyView(FormView):
         image = Image.objects.get(name="icon")
 
         context = super(IdentifyView, self).get_context_data(*args, **kwargs)
-        
+
         context.update({
             "title": title,
             "form": form,
@@ -219,7 +219,7 @@ class IdentifyView(FormView):
         return self.render_to_response(self.get_context_data())
 
 
-    def get_success_url(self, *args, **kwargs):
+    def get_success_url(self,form, *args, **kwargs):
         return reverse('home')
 
 
