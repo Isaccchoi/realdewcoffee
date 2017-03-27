@@ -13,7 +13,7 @@ from datetime import timedelta
 class OrderAdmin(admin.ModelAdmin):
     fields = ("beverage", "user", "reserve_at", "quantity")
     model = Order
-    list_display = ("user", "beverage", "created_at", "reserve_at", "quantity", "total_charge")
+    list_display = ("user", "pin", "beverage", "created_at", "reserve_at", "quantity", "total_charge")
 
     def save_model(self, request, obj, form, change):
         obj.total_charge = form.cleaned_data['quantity'] * 12000

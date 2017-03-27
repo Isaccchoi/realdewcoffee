@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.http import Http404
 from django.views.generic.edit import FormView
+from django.views.generic.list import ListView
 from django.utils import timezone
 from django.urls import reverse
 
@@ -22,6 +23,7 @@ from .models import Beverage
 from .models import Order
 # from .models import SeogyodongOrder
 from .forms import OrderForm
+from .forms import IdentifyForm
 # from .forms import SeogyoOrderForm
 
 from twilio.rest import TwilioRestClient
@@ -56,7 +58,7 @@ def ajax_send_pin(request):
 
 
 class OrderView(FormView):
-    template_name = "order/dutch_order.html"
+    template_name = "order/oder.html"
     form_class = OrderForm
 
     def get_context_data(self, *args, **kwargs):
@@ -74,7 +76,7 @@ class OrderView(FormView):
         else:
             raise Http404
 
-        context = super(DutchOrderView, self).get_context_data(*args, **kwargs)
+        context = super(OrderView, self).get_context_data(*args, **kwargs)
         context.update({
             "title": title,
             "form": OrderForm,
@@ -86,7 +88,7 @@ class OrderView(FormView):
 
     def form_valid(self, form, *args, **kwargs):
         beverage = self.kwargs['bev']
-        
+
         order = form.save(commit=False)
         pin = form.cleaned_data.get('pin')
         try:
@@ -173,7 +175,77 @@ class OrderView(FormView):
             'total': price,
         }
 
-        return render(request, "order/dutch_order.html", ctx)
+        return render(request, "order/oder.html", ctx)
+
+
+
+
+class IdentifyView(FormView):
+    template_name = "order/check.html"
+    form_class = IdentifyForm
+
+    def get_context_data(self, *args, **kwargs):
+        title = "주문 내역 확인"
+        form = IdentifyForm
+        image = Image.objects.get(name="icon")
+
+        context = super(IdentifyView, self).get_context_data(*args, **kwargs)
+        
+        context.update({
+            "title": title,
+            "form": form,
+            "image": image,
+        })
+        return context
+
+
+    def form_valid(self, form, *args, **kwargs):
+        phone_num = form.cleaned_data.get('phone_num')
+        pin = form.cleaned_data.get('pin')
+
+
+        user = get_object_or_404(User, phone_number=phone_num)
+        orders = Order.objects.filter(user=user).first()
+
+        if orders.pin != pin:
+            messages.error(self.request, "PIN이 잘못되었습니다.")
+            return self.render_to_response(self.get_context_data())
+
+        return super(IdentifyView, self).form_valid(form, *args, **kwargs)
+
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request, "잘못 입력하셨습니다.")
+        return self.render_to_response(self.get_context_data())
+
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse('home')
+
+
+    def get(self, request, *args, **kwargs):
+        form = IdentifyForm
+        image = Image.objects.get(name="icon")
+        title = "주문 내역 확인"
+        ctx = {
+            "title": title,
+            "form": form,
+            "image":image,
+        }
+        return render(request, "order/check.html",ctx)
+
+
+
+
+class CheckOrderView(ListView):
+
+    def get(self, request, *args, **kwargs):
+
+        ctx = {
+            "form": "name",
+        }
+        return render(request, "order/check.html",ctx)
+
 
 #
 # class SeogyoOrderView(FormView):

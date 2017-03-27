@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+<div class='row' style="margin-bottom: 30px">
+    <h1 class="text-center">{{ title }}</h1>
+    <hr/>
+    <br/>
+    <div class='col-sm-12'>
+        <p class="text-center">
+            <img class='img-responsive' style="max-height:600px; margin:0 auto;" src="{{ image.image.url }}" />
+            <div class= 'col-sm-4 col-sm-offset-4'>
+                <form method="POST" action=''>{% csrf_token %}
+                    {{ form | crispy }}
+                    <p class="text-center">
+                        <input id="reserve" class='btn btn-primary btn-lg' type='submit' style="" value='확인' />
+                    </p>
+                </form>
+            </div>
+        </p>
+    </div>
+</div>
+{% endblock %}
