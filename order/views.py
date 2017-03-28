@@ -17,11 +17,11 @@ from django.urls import reverse
 from datetime import datetime
 
 # Create your views here.
+from .models import Beverage
+from .models import Order
 
 from main.models import Image
 from main.models import User
-from .models import Beverage
-from .models import Order
 # from .models import SeogyodongOrder
 from .forms import OrderForm
 from .forms import IdentifyForm
@@ -40,9 +40,9 @@ def _verify_pin(phone_num, pin):
 
 def ajax_send_pin(request):
     """ Sends SMS PIN to the specified number """
-    phone_num = request.POST.get('phone_num', "")
+    phone_num = request.POST.get("phone_num", "")
     if not phone_num:
-        return HttpResponse("No mobile number", content_type='text/plain', status=403)
+        return HttpResponse("No mobile number", content_type="text/plain", status=403)
 
     pin = _get_pin()
 
@@ -54,26 +54,28 @@ def ajax_send_pin(request):
                         to="+82%s" %phone_num,
                         from_=settings.TWILIO_FROM_NUMBER,
                     )
-    return HttpResponse(u"문자를 발송했습니다.", content_type='text/plain', status=200)
+    return HttpResponse(u"문자를 발송했습니다.", content_type="text/plain", status=200)
 
 
 
 class OrderView(FormView):
-    template_name = "order/oder.html"
+    template_name = "order/order.html"
     form_class = OrderForm
 
     def get_context_data(self, *args, **kwargs):
-        beverage = kwargs.get('bev', None)
-        print(kwargs.get('bev', "none"))
+        beverage = self.kwargs.get("bev", None)
+        print(kwargs.get("bev", "none"))
 
         if beverage == "seogyo":
             price = 4
             title = "서교동 라떼"
             image = get_object_or_404(Image, name="seogyo")
+            limit = 20
         elif beverage == "dutch":
             price = 12
             title = "더치 커피"
             image = get_object_or_404(Image, name="dutch")
+            limit = 10
         else:
             raise Http404
 
@@ -83,22 +85,23 @@ class OrderView(FormView):
             "form": OrderForm,
             "image": image,
             "total": price,
+            "limit": limit,
         })
         return context
 
 
     def form_valid(self, form, *args, **kwargs):
-        beverage = self.kwargs['bev']
+        beverage = self.kwargs["bev"]
 
         order = form.save(commit=False)
-        pin = form.cleaned_data.get('pin')
+        pin = form.cleaned_data.get("pin")
         try:
             pin = int(pin)
         except:
             messages.error(self.request, "PIN이 잘못되었습니다.")
             return self.render_to_response(self.get_context_data())
 
-        phone_num = form.cleaned_data.get('phone_regex')
+        phone_num = form.cleaned_data.get("phone_regex")
 
         if _verify_pin(phone_num, pin):
             form.save(commit=False)
@@ -140,19 +143,21 @@ class OrderView(FormView):
 
 
     def get_success_url(self, *args, **kwargs):
-        return reverse('reserve', kwargs={"bev":self.kwargs['bev']})
+        return reverse("reserve", kwargs={"bev":self.kwargs["bev"]})
 
     def get(self, request, *args, **kwargs):
-        beverage = kwargs.get('bev', None)
+        beverage = kwargs.get("bev", None)
 
         if beverage == "seogyo":
             price = 4
             title = "서교동 라떼"
             image = Beverage.objects.get(name="seogyo")
+            limit = 20
         elif beverage == "dutch":
             price = 12
             title = "더치 커피"
             image = Beverage.objects.get(name="dutch")
+            limit = 10
         else:
             raise Http404
 
@@ -163,20 +168,21 @@ class OrderView(FormView):
             except:
                 total = None
             data = {
-                'total': total,
+                "total": total,
             }
             return JsonResponse(data)
 
         form = OrderForm
 
         ctx = {
-            'title': title,
-            'form': form,
-            'image': image,
-            'total': price,
+            "title": title,
+            "form": form,
+            "image": image,
+            "total": price,
+            "limit": limit,
         }
 
-        return render(request, "order/oder.html", ctx)
+        return render(request, "order/order.html", ctx)
 
 
 
@@ -201,8 +207,8 @@ class IdentifyView(FormView):
 
 
     def form_valid(self, form, *args, **kwargs):
-        phone_num = form.cleaned_data.get('phone_num')
-        pin = form.cleaned_data.get('pin')
+        phone_num = form.cleaned_data.get("phone_num")
+        pin = form.cleaned_data.get("pin")
 
 
         user = get_object_or_404(User, phone_number=phone_num)
@@ -212,6 +218,7 @@ class IdentifyView(FormView):
             messages.error(self.request, "PIN이 잘못되었습니다.")
             return self.render_to_response(self.get_context_data())
 
+        self.request.session["user_id"] = user.id
         return super(IdentifyView, self).form_valid(form, *args, **kwargs)
 
 
@@ -220,28 +227,32 @@ class IdentifyView(FormView):
         return self.render_to_response(self.get_context_data())
 
 
-    def get_success_url(self,form, *args, **kwargs):
-        return reverse('home')
+    def get_success_url(self, *args, **kwargs):
+        return reverse("check_order")
 
 
-    def get(self, request, *args, **kwargs):
-        form = IdentifyForm
-        image = Image.objects.get(name="icon")
-        title = "주문 내역 확인"
-        ctx = {
-            "title": title,
-            "form": form,
-            "image":image,
-        }
-        return render(request, "order/identify.html",ctx)
+    # def get(self, request, *args, **kwargs):
+    #     form = IdentifyForm
+    #     image = Image.objects.get(name="icon")
+    #     title = "주문 내역 확인"
+    #     ctx = {
+    #         "title": title,
+    #         "form": form,
+    #         "image":image,
+    #     }
+    #     return render(request, "order/identify.html",ctx)
 
 
 
 
 class CheckOrderView(ListView):
+    template_name = "order/check.html"
+    queryset = Order.objects.all()
 
-    def get(self, request, *args, **kwargs):
-        return redirect("/home/")
+    def get_queryset(self):
+        user_id = self.request.session.get("user_id")
+        user = get_object_or_404(User, id=user_id)
+        return super(CheckOrderView, self).get_queryset().filter(user=user)
 
 
     def post(self, request, *args, **kwargs):
@@ -270,14 +281,14 @@ class CheckOrderView(ListView):
 #
 #     def form_valid(self, form, *args, **kwargs):
 #         order = form.save(commit=False)
-#         pin = form.cleaned_data.get('pin')
+#         pin = form.cleaned_data.get("pin")
 #         try:
 #             pin = int(pin)
 #         except:
 #             messages.error(self.request, "PIN이 잘못되었습니다.")
 #             return self.render_to_response(self.get_context_data())
 #
-#         phone_num = form.cleaned_data.get('phone_regex')
+#         phone_num = form.cleaned_data.get("phone_regex")
 #
 #         if _verify_pin(phone_num, pin):
 #             form.save(commit=False)
@@ -319,7 +330,7 @@ class CheckOrderView(ListView):
 #             except:
 #                 total = None
 #             data = {
-#                 'total': total,
+#                 "total": total,
 #             }
 #             return JsonResponse(data)
 #

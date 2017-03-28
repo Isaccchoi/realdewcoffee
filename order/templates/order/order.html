@@ -25,19 +25,47 @@ $('#id_quantity').change(function(){
         qty: qty,
         total: total
     }
+
+    if({{ total }} == 12){
+        var limit = 10;
+    }else if({{ total }} == 4){
+        var limit =20;
+    }
+
+    if(qty > limit){
+        $("#id_quantity").val(limit);
+        $("#total").val({{ total }} * limit);
+        $("#id_quantity").focus();
+        $("#alert-limit_quantity").removeClass('hide');
+        $.ajax({
+            type: "GET", //"POST"
+            url: "{{ build_absolute_uri }}",
+            data: data,
+            success: function(data){
+                $("#total").val({{ total}} * limit);
+            },
+            error: function(response, error){
+    			console.log(response);
+    				// console.log(error)
+    		}
+        })
+    }else{
+        $.ajax({
+            type: "GET", //"POST"
+            url: "{{ build_absolute_uri }}",
+            data: data,
+            success: function(data){
+                $("#total").text(data.total);
+            },
+            error: function(response, error){
+    			console.log(response);
+    				// console.log(error)
+    		}
+        })
+    }
     console.log(data);
-    $.ajax({
-        type: "GET", //"POST"
-        url: "{{ build_absolute_uri }}",
-        data: data,
-        success: function(data){
-            $("#total").text(data.total);
-        },
-        error: function(response, error){
-			console.log(response);
-				// console.log(error)
-		}
-    })
+
+
 });
 
 
@@ -79,6 +107,7 @@ $('#get-pin').click(function(){
     </div>
     <div class='col-sm-4'>
         <h3 class='text-center'>{{ title }}</h3>
+        <p id="alert-limit_quantity" class="text-center hide hot">{{ limit }}개 이상 필요시 가게에 연락부탁드립니다.</p>
         <h4 class='text-right'>가격: ￦<span id="total" class="total">{{ total }}</span>,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}

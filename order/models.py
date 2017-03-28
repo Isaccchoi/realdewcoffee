@@ -19,6 +19,12 @@ class Beverage(models.Model):
 
 
 
+beverage_trans ={
+    "seogyo": "서교동 라떼",
+    "dutch": "더치 커피",
+}
+
+
 class Order(models.Model):
     beverage = models.ForeignKey(Beverage)
     user = models.ForeignKey(User)
@@ -32,8 +38,13 @@ class Order(models.Model):
     def __str__(self):
         return self.user.phone_number
 
+    def get_beverage_name(self):
+        return beverage_trans[self.beverage.name]
+
+
     class Meta:
         ordering = ['-created_at', '-id']
+
 
 #
 #

@@ -76,7 +76,7 @@ class IdentifyForm(forms.Form):
                     widget=forms.TextInput(attrs={'placeholder':'01012345678'}),
                 )
     pin = forms.IntegerField(label="PIN",
-                    help_text="주문시 입력하였던 PIN을 입력하세요.",
+                    help_text="주문시 받았던 PIN을 입력하세요.",
                     error_messages = {
                         "invalid" :("PIN이 일치하지 않습니다."),
                     },

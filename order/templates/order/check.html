@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <div class='col-sm-8 col-sm-offset-2'>
+        <h1 class='text-center'>주문 기록</h1>
+            <hr/>
+            <br/>
+        <table class='table'>
+            {% for object in object_list %}
+                <tr class='lead'>
+                    <td>{{ object.get_beverage_name }}</td>
+                    <td>{{ object.reserve_at }}</td>
+                    <td>{{ object.quantity }}</td>
+                    <td>{{ object.total_charge }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}
