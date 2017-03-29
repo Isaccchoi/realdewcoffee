@@ -9,7 +9,13 @@
             <br/>
         <table class='table'>
             {% for object in object_list %}
-                <tr class='lead'>
+                <tr class='lead text-center' style="font:bold;">
+                    <td>주문 제품</td>
+                    <td>예약 시간</td>
+                    <td>수량</td>
+                    <td>금액</td>
+                </tr>
+                <tr class='text-center'>
                     <td>{{ object.get_beverage_name }}</td>
                     <td>{{ object.reserve_at }}</td>
                     <td>{{ object.quantity }}</td>

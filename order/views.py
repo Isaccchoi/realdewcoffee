@@ -151,12 +151,12 @@ class OrderView(FormView):
         if beverage == "seogyo":
             price = 4
             title = "서교동 라떼"
-            image = Beverage.objects.get(name="seogyo")
+            image = get_object_or_404(Image, name="seogyo")
             limit = 20
         elif beverage == "dutch":
             price = 12
             title = "더치 커피"
-            image = Beverage.objects.get(name="dutch")
+            image = get_object_or_404(Image, name="dutch")
             limit = 10
         else:
             raise Http404
