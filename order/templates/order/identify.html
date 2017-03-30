@@ -2,6 +2,21 @@
 {% load crispy_forms_tags %}
 
 
+<script>
+{% block jquery %}
+$('#reserve').click(function(){
+    if($("#id_phone_regex").val() == ""){
+        $("#id_phone_regex").focus();
+    }else if($.isNumeric($("#id_phone_regex").val())){
+        
+    }else {
+        alert("휴대폰 번호는 01012345678형식의 숫자로 작성하여야 합니다.")
+    };
+});
+{% endblock %}
+</script>
+
+
 
 {% block content %}
 <div class='row' style="margin-bottom: 30px">

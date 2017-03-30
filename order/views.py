@@ -223,8 +223,13 @@ class IdentifyView(FormView):
 
 
     def form_invalid(self, form, *args, **kwargs):
-        messages.error(self.request, "잘못 입력하셨습니다.")
-        return self.render_to_response(self.get_context_data())
+        response = super(IdentifyView, self).form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        else:
+            return response
+        # messages.error(self.request, "잘못 입력하셨습니다.")
+        # return self.render_to_response(self.get_context_data())
 
 
     def get_success_url(self, *args, **kwargs):
