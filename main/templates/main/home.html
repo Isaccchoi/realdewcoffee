@@ -12,12 +12,16 @@
 
 {% block content %}
 
-<div class="row text-center">
-    <h1>Real Dew Coffee</h1>
+<div class="row text-center col-sm-10 col-sm-offset-1">
+    <img class="img-responsive" style="margin:0 auto;" src="{{ icon.image.url }}" />
+    <!-- <h1>Real Dew Coffee</h1> -->
     <hr/>
     <h3>{{ greeting }}</h3>
-
     {% include "imageslider.html" %}
+    <p style="font-size:17px;">어릴적부터 커피를 좋아했던 친구 두명이 함께 만든 카페입니다. <br/>
+        저희는 맛으로 승부를 하며 모든 재료 및 소스는 직접 제조하여 사용합니다. <br/>
+        찾아주시는, 방문해주시는 모든 분께 감시드립니다.<br/>
+        맛으로 보답하겠습니다.</p>
 </div>
 
 

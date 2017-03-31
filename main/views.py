@@ -7,6 +7,7 @@ from django.utils import timezone
 # Create your views here.
 
 from .models import MainImage
+from .models import Image
 
 
 
@@ -19,6 +20,7 @@ def home(request):
     b21 = MainImage.objects.get(name="b21")
     b05 = MainImage.objects.get(name="b05")
     loading = MainImage.objects.get(name="loading")
+    icon = Image.objects.get(name="icon")
 
     ctx = {
         "greeting": greeting,
@@ -29,6 +31,7 @@ def home(request):
         "b21":b21,
         "b05":b05,
         "loading":loading,
+        "icon": icon,
     }
 
     return render(request, 'main/home.html', ctx)
@@ -68,7 +71,7 @@ def location(request):
         "id" : "1007",
         'address': "서울특별시 마포구 월드컵북로1길 26-17",
         'address_short': "서울특별시 마포구 서교동 352-7",
-        'working_time': "09:00 ~ 21:00",
+        'working_time': "09:00 ~ 23:00",
         'phone': "02-333-5945"
     }
 
