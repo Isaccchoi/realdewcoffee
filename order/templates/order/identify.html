@@ -5,12 +5,18 @@
 <script>
 {% block jquery %}
 $('#reserve').click(function(){
+    var phone_regex = $("#id_phone_regex").val();
+    var pattern = new RegExp(/^01([0|1|6|7|8|9]?)([0-9]{7,8})$/i);
+    var pin = $("#id_pin").val();
+
     if($("#id_phone_regex").val() == ""){
         $("#id_phone_regex").focus();
-    }else if($.isNumeric($("#id_phone_regex").val())){
-        
-    }else {
+    }else if(!pattern.test(phone_regex) == true){
         alert("휴대폰 번호는 01012345678형식의 숫자로 작성하여야 합니다.")
+    }else{
+        if(!$.isNumeric(pin)){
+            alert("PIN이 올바르지 않습니다.");
+        };
     };
 });
 {% endblock %}

@@ -70,9 +70,12 @@ $('#id_quantity').change(function(){
 
 
 $('#get-pin').click(function(){
+    var phone_regex = $("#id_phone_regex").val();
+    var pattern = new RegExp(/^01([0|1|6|7|8|9]?)([0-9]{7,8})$/i);
+
     if($("#id_phone_regex").val() == ""){
         $("#id_phone_regex").focus();
-    }else if($.isNumeric($("#id_phone_regex").val())){
+    }else if(pattern.test(phone_regex)){
         $.ajax({
             url: "{% url 'ajax_send_pin' %}",
             type: "POST",
@@ -81,7 +84,8 @@ $('#get-pin').click(function(){
                 'csrfmiddlewaretoken': '{{csrf_token}}'
             },
             success: function(data){
-                alert("PIN 번호가 발송되었습니다.");
+                // alert("PIN 번호가 발송되었습니다.");
+                $('#pin-send').removeClass('hide');
                 $('#reserve').removeClass('hide');
             },
             error: function(response, error){
@@ -89,8 +93,22 @@ $('#get-pin').click(function(){
     		    // console.log(error);
     		}
         })
-    }else {
-        alert("휴대폰 번호는 01012345678형식의 숫자로 작성하여야 합니다.")
+    }else{
+        alert("휴대폰 번호는 01012345678형식의 숫자로 작성하여야 합니다.");
+    };
+});
+
+$("#reserve").click(function(){
+    var pin = $("#div_id_pin").val();
+    var phone_regex = $("#id_phone_regex").val();
+    var pattern = new RegExp(/^01([0|1|6|7|8|9]?)([0-9]{7,8})$/i);
+
+    if($("#id_phone_regex").val()== ""){
+        $("#id_phone_regex").focus();
+    }else if(pattern.test(phone_regex) == true){
+        if($.isNaN(pin)){
+            alert("PIN이 올바르지 않습니다");
+        };
     };
 });
 {% endblock %}
@@ -111,6 +129,7 @@ $('#get-pin').click(function(){
         <h4 class='text-right'>가격: ￦<span id="total" class="total">{{ total }}</span>,000</h4>
         <form method="POST" action=''>{% csrf_token %}
             {{ form | crispy }}
+            <p id="pin-send" class="text-center hide ice">PIN이 발송되었습니다.</p>
             <p class="text-right"><button id="get-pin" class="btn btn-danger" type="button"><i class="icon-share"></i>PIN 받기</button>
                 <input id="reserve" class='hide btn btn-primary btn-lg' type='submit' value='예약' />
             </p>
