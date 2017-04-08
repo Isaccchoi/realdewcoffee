@@ -22,7 +22,8 @@
                         {% if coffee.on_sale %}
                                 <tr>
                                     <td><span class="name">{{ coffee.name }}</span> <span class="name-eng">({{ coffee.name_eng}})</span></td>
-                                    <td>{% if coffee.hot %}<span class="hot">HOT </span>{% endif %}{% if coffee.warm %}<span class='hot'>Warm</span>{% endif %}</td>
+                                    <td>{% if coffee.hot %}<span class="hot">HOT </span>{% endif %}</td>
+                                    <td>{% if coffee.warm %}<span style="color:#FF6347;">WARM</span>{% endif %}</td>
                                     <td>{% if coffee.ice %}<span class="ice"> ICE</span>{% endif %}</td>
                                     <td class="text-right">￦{{ coffee.price }}</td>
                                 </tr>
@@ -59,7 +60,8 @@
                         {% if other.on_sale %}
                             <tr>
                                 <td><span class="name">{{ other.name }}</span> <span class="name-eng">({{ other.name_eng}})</span></td>
-                                <td>{% if other.hot %}<span class="hot">HOT </span>{% endif %}{% if other.warm %}<span class='hot'>Warm</span>{% endif %}</td>
+                                <td>{% if other.hot %}<span class="hot">HOT </span>{% endif %}</td>
+                                <td>{% if other.warm %}<span style="color:#FF6347;">WARM</span>{% endif %}</td>
                                 <td>{% if other.ice %}<span class="ice"> ICE</span>{% endif %}</td>
                                 <td class="text-right">￦{{ other.price }}</td>
                             </tr>
@@ -73,7 +75,8 @@
                         {% if tea.on_sale %}
                             <tr>
                                 <td><span class="name">{{ tea.name }}</span> <span class="name-eng">({{ tea.name_eng}})</span></td>
-                                <td>{% if tea.hot %}<span class="hot">HOT </span>{% endif %}{% if tea.warm %}<span class='hot'>Warm</span>{% endif %}</td>
+                                <td>{% if tea.hot %}<span class="hot">HOT </span>{% endif %}</td>
+                                <td>{% if tea.warm %}<span style="color:#FF6347;">WARM</span>{% endif %}</td>
                                 <td>{% if tea.ice %}<span class="ice"> ICE</span>{% endif %}</td>
                                 <td class="text-right">￦{{ tea.price }}</td>
                             </tr>

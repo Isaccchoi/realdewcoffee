@@ -1,2 +1,2 @@
 # add real images
-# change menu on_sale handling process from template to views
+# if boss need, Add Payment function
